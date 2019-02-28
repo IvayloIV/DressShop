@@ -3,14 +3,14 @@ const User = require('../models/User');
 const encryption = require('../util/encryption');
 
 function validateUser(req) {
-	const { email, username, password, repeatPass, firstName, lastName, age } = req.body;
+	const { email, username, password, firstName, lastName, age } = req.body;
 	let messages = [];
 
 	if (!email || email.length === 0) {
 		messages.push('Email is empty.');
 	}
 	
-	if (!email || email.indexOf('@') === -1) {
+	if (email.indexOf('@') === -1) {
 		messages.push('Invalid email.');
 	}
 
@@ -20,10 +20,6 @@ function validateUser(req) {
 
 	if (!password || password.length < 4) {
 		messages.push('Password must be more than 4 symbols.');
-	}
-
-	if (password !== repeatPass) {
-		messages.push('Password must match.');
 	}
 
 	if (!firstName || firstName.length < 4) {
@@ -43,7 +39,7 @@ function validateUser(req) {
 
 module.exports = {
 	register: (req, res) => {
-		const { email, username, password, repeatPass, firstName, lastName, age } = req.body;
+		const { email, username, password, firstName, lastName, age, imageUrl } = req.body;
 		const messages = validateUser(req);
 
 		if (messages.length > 0) {
@@ -61,6 +57,7 @@ module.exports = {
 			age: Number(age),
 			hashedPassword,
 			salt,
+			imageUrl,
 			roles: ['User']
 		}).then((user) => {
 			res.status(201)
@@ -104,7 +101,7 @@ module.exports = {
 						success: true, 
 						message: 'User successfully logged in!',
 						token,
-						userId: user._id.toString()
+						user: user
 					});
 			})
 			.catch(error => {

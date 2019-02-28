@@ -38,7 +38,7 @@ module.exports = {
             const dress = await Dress.findById(dressId);
             dress.comments.push(comment.id);
             await dress.save();
-            res.status(200).json({ success: true, message: 'Comment created successful.', comment });
+            res.status(201).json({ success: true, message: 'Comment created successful.', comment });
         } catch (err) {
             next(err);
         }

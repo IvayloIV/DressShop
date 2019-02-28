@@ -147,7 +147,7 @@ module.exports = {
                 .where('isBought').equals(false)
                 .count();
 
-            res.status(200).json({ success: true, count: itemsCount });
+            res.status(200).json({ count: itemsCount });
         } catch (err) {
             next(err);
         }

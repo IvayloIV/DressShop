@@ -4,39 +4,57 @@ import { withRouter, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Input from '../common/Input';
 import { getCategoriesAction } from '../../actions/categoryActions';
-import { createDressAction } from '../../actions/dressActions';
+import { editDressAction, detailsDressAction } from '../../actions/dressActions';
 
-class Create extends Component {
+class Edit extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             category: '',
             cost: '',
-            name: '',
-            imageUrl: '',
-            size: '',
-            description: ''
+            name: 'Loading...',
+            imageUrl: 'Loading...',
+            size: 'Loading...',
+            description: 'Loading...'
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (!localStorage.getItem('authToken')) {
             toast.error('First you must login.');
             this.props.history.push('/login');
             return;
         }
 
-        this.props.getCategories().then(({ categories }) => {
-            let firstCategory = '';
-            if (categories && categories.length > 0) {
-                firstCategory = categories[0]._id;
+        const dressId = this.props.match.params.id;
+        try {
+            await this.props.loadCategories();
+            const json = await this.props.detailsDress(dressId);
+            const dress = json.dress;
+            if (!dress) {
+                toast.error(json.message);
+                this.props.history.push('/');
+                return;
             }
-            this.setState({ category: firstCategory });
-        });
+
+            const isNotAdmin = localStorage.getItem('isAdmin') === 'false';
+            const isNotOwner = dress.creator._id !== localStorage.getItem('userId');
+            if (isNotAdmin && isNotOwner) {
+                toast.error('You are not owner of product.');
+                this.props.history.push('/');
+                return;
+            }
+
+            const { category, cost, name, imageUrl, size, description } = this.props.dress[0];
+            this.setState({ category: category._id, cost, name, imageUrl, size, description });
+        } catch (err) {
+            toast.error(err.message);
+            this.props.history.push('/');
+        }
     }
 
     onChangeHandler(e) {
@@ -46,9 +64,11 @@ class Create extends Component {
     onSubmitHandler(e) {
         e.preventDefault();
         const { category, cost, name, imageUrl, size, description } = this.state;
+        const { id } = this.props.match.params;
         //Validations
 
-        this.props.createDress(
+        this.props.editDress(
+            id,
             category,
             Number(cost),
             name,
@@ -103,7 +123,7 @@ class Create extends Component {
                         ))}
                     </select>
                     <Link to="/">Cancel</Link>
-                    <input type="submit" value="Create" />
+                    <input type="submit" value="Edit" />
                 </form>
             </div>
         )
@@ -112,17 +132,19 @@ class Create extends Component {
 
 function mapState(state) {
     return {
-        categories: state.categories
+        categories: state.categories,
+        dress: state.dress
     };
 }
 
 
 function mapDispatch(dispatch) {
     return {
-        getCategories: () => dispatch(getCategoriesAction()),
-        createDress: (category, cost, name, imageUrl, size, description) =>
-            dispatch(createDressAction(category, cost, name, imageUrl, size, description))
+        loadCategories: () => dispatch(getCategoriesAction()),
+        detailsDress: (id) => dispatch(detailsDressAction(id)),
+        editDress: (id, category, cost, name, imageUrl, size, description) =>
+            dispatch(editDressAction(id, category, cost, name, imageUrl, size, description))
     };
 }
 
-export default withRouter(connect(mapState, mapDispatch)(Create));
+export default withRouter(connect(mapState, mapDispatch)(Edit));

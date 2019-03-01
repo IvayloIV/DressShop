@@ -5,9 +5,10 @@ const isAuth = require('../middleware/is-auth');
 router.get('/count', dressController.countDress);
 router.post('/create', isAuth, dressController.create);
 
-router.post('/edit/:id', isAuth, dressController.edit);
+router.post('/edit/:id', isAuth, dressController.editPost);
+
 router.delete('/remove/:id', isAuth, dressController.remove);
-router.get('/details/:id', isAuth, dressController.details);
+router.get('/details/:id', dressController.details);
 
 router.get('/category/:categoryName', dressController.getByCategory);
 router.post('/like/:dressId', isAuth, dressController.like);

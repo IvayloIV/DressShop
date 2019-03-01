@@ -83,5 +83,16 @@ module.exports = {
         } catch (err) {
             next(err);
         }
+    },
+    getByDressId: async (req, res, next) => {
+        const { dressId } = req.params;
+
+        try {
+            const comments = await Comment.find({ dress: dressId })
+				.sort({ creationDate: -1 });
+            res.status(200).json({ success: true, comments });
+        } catch (err) {
+            next(err);
+        }
     }
 }

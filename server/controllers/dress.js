@@ -23,7 +23,7 @@ function validateDress({ cost, name, imageUrl, size, description }) {
         errors.push('Size is empty.');
     }
 
-    if (description.length < 10 || description.length > 150) {
+    if (!description || description.length < 10 || description.length > 150) {
         errors.push('Description must be between 10 and 150 symbols.');
     }
 
@@ -91,7 +91,7 @@ module.exports = {
         const messages = validateDress(req.body);
 
         if (messages.length !== 0) {
-            res.status(422).json({ success: false, messages: messages });
+            res.status(422).json({ success: false, errors: messages });
             return;
         }
 
@@ -152,13 +152,13 @@ module.exports = {
             next(err);
         }
     },
-    edit: async (req, res, next) => {
+    editPost: async (req, res, next) => {
         const { id: dressId } = req.params;
         const { category, cost, name, imageUrl, size, description } = req.body;
         const messages = validateDress(req.body);
 
         if (messages.length !== 0) {
-            res.status(422).json({ success: false, messages: messages });
+            res.status(422).json({ success: false, errors: messages });
             return;
         }
 
@@ -299,7 +299,6 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-
     },
     getByCategory: async (req, res, next) => {
         const { categoryName } = req.params;

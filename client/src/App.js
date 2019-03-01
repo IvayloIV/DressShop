@@ -10,6 +10,9 @@ import LoginPage from './components/Auth/LoginPage';
 import HomePage from './components/HomePage/HomePage';
 import CategoryCreate from './components/Catalog/Create';
 import DressCreate from './components/Dress/Create';
+import DressEdit from './components/Dress/Edit';
+import DressRemove from './components/Dress/Remove';
+import DressDetails from './components/Dress/Details';
 
 class App extends Component {
     constructor(props) {
@@ -33,6 +36,9 @@ class App extends Component {
                     <Route exact path="/" component={HomePage} />
                     <Route exact path="/category/create" component={CategoryCreate} />
                     <Route exact path="/dress/create" component={DressCreate} />
+                    <Route exact path="/dress/edit/:id" component={DressEdit} />
+                    <Route exact path="/dress/remove/:id" component={DressRemove} />
+                    <Route exact path="/dress/details/:id" component={DressDetails} />
                     <Route exact path="/dress/:page" component={HomePage} />
                     <Route path="/login" component={LoginPage} />
                     <Route path="/register" component={RegisterPage} />

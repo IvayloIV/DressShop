@@ -42,6 +42,8 @@ function loginAction(email, password, msg) {
                     localStorage.setItem('username', json.user.username);
                     localStorage.setItem('isAdmin', json.user.roles.indexOf('Admin') > -1);
                     localStorage.setItem('money', json.user.money);
+                    localStorage.setItem('userId', json.user._id);
+                    localStorage.setItem('blocked', json.user.blocked);
                     dispatch(loginSuccess());
                     toast.success(`${msg || 'Login'} successful.`);
                 } else {

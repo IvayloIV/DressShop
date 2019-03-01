@@ -47,4 +47,42 @@ async function getAllCategories() {
     return await requester(`category/all`, 'GET', true);
 }
 
-export { register, login, getDressByPage, dressCount, createCategory, getAllCategories };
+async function createDress(category, cost, name, imageUrl, size, description) {
+    return await requester(`dress/create`, 'POST', true, { category, cost, name, imageUrl, size, description });
+}
+
+async function editDress(id, category, cost, name, imageUrl, size, description) {
+    return await requester(`dress/edit/${id}`, 'POST', true, { category, cost, name, imageUrl, size, description });
+}
+
+async function detailsDress(id) {
+    return await requester(`dress/details/${id}`, 'GET', false);
+}
+
+async function removeDress(id) {
+    return await requester(`dress/remove/${id}`, 'DELETE', true);
+}
+
+async function getComments(dressId) {
+    return await requester(`comment/${dressId}`, 'GET', false);
+}
+
+async function createComment(dressId, message, rating) {
+    return await requester(`comment/create/${dressId}`, 'POST', true, { message, rating });
+}
+
+async function removeComment(dressId) {
+    return await requester(`comment/remove/${dressId}`, 'DELETE', true);
+}
+
+async function likeDress(dressId) {
+    return await requester(`dress/like/${dressId}`, 'POST', true);
+}
+
+async function dislikeDress(dressId) {
+    return await requester(`dress/dislike/${dressId}`, 'POST', true);
+}
+
+export { register, login, getDressByPage, dressCount, createCategory, 
+    getAllCategories, createDress, editDress, detailsDress, removeDress,
+    getComments, createComment, removeComment, likeDress, dislikeDress };

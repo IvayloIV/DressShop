@@ -13,6 +13,9 @@ import DressCreate from './components/Dress/Create';
 import DressEdit from './components/Dress/Edit';
 import DressRemove from './components/Dress/Remove';
 import DressDetails from './components/Dress/Details';
+import DressByCategory from './components/Dress/ByCategory';
+import CartPage from './components/Cart/CartPage';
+import ProfilePage from './components/Profile/ProfilePage';
 
 class App extends Component {
     constructor(props) {
@@ -39,6 +42,9 @@ class App extends Component {
                     <Route exact path="/dress/edit/:id" component={DressEdit} />
                     <Route exact path="/dress/remove/:id" component={DressRemove} />
                     <Route exact path="/dress/details/:id" component={DressDetails} />
+                    <Route exact path="/dress/category/:categoryName" component={DressByCategory} />
+                    <Route exact path="/cart/my" component={CartPage} />
+                    <Route exact path="/user/profile/:username" component={ProfilePage} />
                     <Route exact path="/dress/:page" component={HomePage} />
                     <Route path="/login" component={LoginPage} />
                     <Route path="/register" component={RegisterPage} />

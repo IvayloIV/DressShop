@@ -6,7 +6,17 @@ module.exports = {
         const { userId } = req.user;
         try {
             const user = await User.findById(userId)
-                .populate('cart');
+                .populate({ 
+					path: 'cart',
+					populate: {
+					   path: 'creator',
+					   model: 'User'
+					},
+					populate: {
+					   path: 'category',
+					   model: 'Category'
+					}
+				});
 
             res.status(200).json({ success: true, cart: user.cart });
         } catch (err) {
@@ -109,7 +119,8 @@ module.exports = {
             }
 
             if (user.money < neededMoney) {
-                let error = new Error('You dont have enough money.');
+				const diff = neededMoney - user.money;
+                let error = new Error(`You dont have enough money. You need ${diff} more.`);
                 error.statusCode = 403;
                 throw error;
             }
@@ -126,7 +137,7 @@ module.exports = {
 
             user.cart = [];
             await user.save();
-            res.status(200).json({ success: true, message: 'Checkout successfully.' });
+            res.status(200).json({ success: true, message: 'Checkout successfully.', spendMoney: neededMoney });
         } catch (err) {
             next(err);
         }

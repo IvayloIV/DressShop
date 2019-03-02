@@ -83,6 +83,32 @@ async function dislikeDress(dressId) {
     return await requester(`dress/dislike/${dressId}`, 'POST', true);
 }
 
+async function getByCategory(categoryName) {
+    return await requester(`dress/category/${categoryName}`, 'GET', false);
+}
+
+async function addToCart(id) {
+    return await requester(`cart/add/${id}`, 'POST', true);
+}
+
+async function getMyCart() {
+    return await requester(`cart`, 'GET', true);
+}
+
+async function removeFromCart(id) {
+    return await requester(`cart/remove/${id}`, 'DELETE', true);
+}
+
+async function checkout() {
+    return await requester(`cart/checkout`, 'POST', true);
+}
+
+async function profile(username) {
+    return await requester(`user/profile/${username}`, 'GET', true);
+}
+
 export { register, login, getDressByPage, dressCount, createCategory, 
     getAllCategories, createDress, editDress, detailsDress, removeDress,
-    getComments, createComment, removeComment, likeDress, dislikeDress };
+    getComments, createComment, removeComment, likeDress, dislikeDress,
+    getByCategory, addToCart, getMyCart, removeFromCart,
+    checkout, profile };

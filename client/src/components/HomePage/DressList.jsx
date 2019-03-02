@@ -2,7 +2,7 @@ import React from 'react';
 import DressCard from './DressCard';
 
 function DressList(props) {
-    const { dress } = props;
+    const { dress, url } = props;
     return (
         <div>
             {dress.map(d => 
@@ -16,6 +16,8 @@ function DressList(props) {
                     likesCount={d.likes.length}
                     size={d.size}
                     cost={d.cost}
+                    date={d.creationDate}
+                    url={url}
                 />
             )}
         </div>

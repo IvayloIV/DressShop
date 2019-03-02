@@ -143,7 +143,7 @@ module.exports = {
     countDress: async (req, res, next) => {
         try {
             const itemsCount = await Dress
-                .where('cart').equals(undefined)
+                .where('userCart').equals(undefined)
                 .where('isBought').equals(false)
                 .count();
 
@@ -306,7 +306,13 @@ module.exports = {
         try {
             const category = await Category
                 .findOne({ name: categoryName })
-                .populate('clothes');
+                .populate({ 
+					 path: 'clothes',
+					 populate: {
+					   path: 'category',
+					   model: 'Category'
+					 } 
+				  });
 
             if (!category) {
                 let error = new Error('Category not found.');
@@ -314,7 +320,10 @@ module.exports = {
                 throw error;
             }
 
-            res.status(200).json({ success: true, dress: category.clothes });
+            res.status(200).json({ 
+				success: true, 
+				dress: category.clothes.filter(c => c.userCart === undefined && c.isBought === false) 
+			});
         } catch (err) {
             next(err);
         }

@@ -16,7 +16,8 @@ class HomePage extends Component {
             countPerPage: 6,
             totalDressCount: 0,
             currentPage: 1,
-            newPage: false
+            newPage: false,
+            loading: true
         }
 
         this.changeCountPerPage = this.changeCountPerPage.bind(this);
@@ -28,7 +29,8 @@ class HomePage extends Component {
         dressCount().then((json) => {
             this.setState({
                 totalDressCount: json.count,
-                currentPage: Number(page)
+                currentPage: Number(page),
+                loading: false
             });
         });
     }
@@ -49,16 +51,21 @@ class HomePage extends Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return null;
+        }
+        
         let page = 1;
         if (this.props.match.params.page) {
             page = Number(this.props.match.params.page);
         }
         const { countPerPage, totalDressCount } = this.state;
+        const url = this.props.match.url;
 
         return (
             <div className="container">
                 <DressSelection changeCountPerPage={this.changeCountPerPage}/>
-                <DressList dress={this.props.dress} />
+                <DressList dress={this.props.dress} url={url}/>
                 <Pagination currentPage={page} length={countPerPage} itemsCount={totalDressCount} />
             </div>
         );

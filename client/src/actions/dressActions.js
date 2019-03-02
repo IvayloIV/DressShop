@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS } from './actionTypes';
-import { getDressByPage, createDress, editDress, detailsDress, removeDress, likeDress, dislikeDress } from '../api/remote';
+import { getDressByPage, createDress, editDress, detailsDress, removeDress, likeDress, dislikeDress, getByCategory } from '../api/remote';
 
 function getDressSuccess(data) {
     return {
@@ -116,6 +116,19 @@ function dislikeDressAction(dressId, userId) {
     };
 }
 
+function getDressByCategoryAction(categoryName) {
+    return (dispatch) => {
+        return getByCategory(categoryName)
+            .then(json => {
+                if (json.success) {
+                    dispatch(getDressSuccess(json.dress));
+                }
+
+                return json;
+            });
+    };
+}
+
 
 function showMessage(json) {
     if (json.success) {
@@ -130,4 +143,4 @@ function showMessage(json) {
 }
 
 export { getDressAction, createDressAction, editDressAction, detailsDressAction, 
-    removeDressAction, likeDressAction, dislikeDressAction };
+    removeDressAction, likeDressAction, dislikeDressAction, getDressByCategoryAction };

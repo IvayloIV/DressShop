@@ -167,7 +167,7 @@ module.exports = {
 
         try {
             const currentUser = await User.findById(req.user.userId);
-            if (currentUser.roles.indexOf('Admin') === -1) {
+            if (currentUser.roles.indexOf('Admin') === -1 && username !== currentUser.username) {
                 let error = new Error('You are not admin.');
                 error.statusCode = 401;
                 throw error;
@@ -175,8 +175,20 @@ module.exports = {
 
             const user = await User.findOne({ username })
                 .populate('comments')
-                .populate('boughtClothes')
-                .populate('soldClothes');
+                .populate({ 
+					path: 'boughtClothes',
+					populate: {
+						path: 'category',
+						model: 'Category'
+					} 
+				})
+                .populate({ 
+					path: 'soldClothes',
+					populate: {
+						path: 'category',
+						model: 'Category'
+					} 
+				});
 
             if (!user) {
                 let error = new Error('User not found.');

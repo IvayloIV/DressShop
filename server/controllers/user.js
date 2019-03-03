@@ -112,6 +112,22 @@ module.exports = {
 				res.status(error.statusCode).json({ success: false, message: error.message });
 			})
 	},
+	getAll: async (req, res, next) => {
+		try {
+			const currentUser = await User.findById(req.user.userId);
+			if (currentUser.roles.indexOf('Admin') === -1) {
+				let error = new Error('You are not admin.');
+				error.statusCode = 401;
+				throw error;
+			}
+
+			const users = await User.find({})
+				.where('roles').nin(['Admin']);
+			res.status(200).json({ success: true, users });
+		} catch (err) {
+			next(err);
+		}
+	},
 	block: async (req, res, next) => {
 		const {userId} = req.params;
 

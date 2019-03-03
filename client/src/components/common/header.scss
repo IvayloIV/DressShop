@@ -1,0 +1,39 @@
+.logo {
+    text-align: center;
+    color: white;
+    background-color: #1B1B1B;
+    margin: 0;
+    padding: 1rem 0;
+
+    span {
+        color: #FF0080;
+    }
+}
+
+.menu {
+    background-color: #FF0080;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5rem;
+    font-size: 1.04rem;
+    font-weight: 700;
+
+    a {
+        text-decoration: none;
+        color: white;
+        padding: 0.8rem;
+        display: inline-block;
+
+        &:hover {
+            background: rgb(199, 2, 101);
+        }
+    }
+
+    .right {
+        text-align: left;
+    }
+
+    .active {
+        background: rgb(219, 2, 111);
+    }
+}

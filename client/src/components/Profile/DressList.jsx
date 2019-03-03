@@ -1,15 +1,13 @@
 import React from 'react';
 import DressCard from './DressCard';
-import './dress-list.scss';
 
 function DressList(props) {
-    const { dress, url, countPerPage } = props;
+    const { dress } = props;
     return (
-        <div className={'product-list' + (countPerPage === 8 ? ' more' : ' normal')} id="product-list">
-            {dress.map(d => 
-                <DressCard 
+        <div>
+            {dress.map(d => (
+                <DressCard
                     key={d._id}
-                    creator={d.creator}
                     id={d._id}
                     category={d.category.name}
                     imageUrl={d.imageUrl}
@@ -17,11 +15,9 @@ function DressList(props) {
                     likesCount={d.likes.length}
                     size={d.size}
                     cost={d.cost}
-                    date={d.creationDate}
-                    commentsCount={d.comments.length}
-                    url={url}
+                    date={d.date}
                 />
-            )}
+            ))}
         </div>
     )
 }

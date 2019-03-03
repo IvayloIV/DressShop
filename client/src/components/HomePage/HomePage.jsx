@@ -8,6 +8,9 @@ import Pagination from '../common/Pagination';
 import DressList from './DressList';
 import DressSelection from './DressSelection';
 
+import shoppingGirl from '../../images/shopping-girl.png';
+import './home.scss';
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
@@ -64,8 +67,16 @@ class HomePage extends Component {
 
         return (
             <div className="container">
-                <DressSelection changeCountPerPage={this.changeCountPerPage}/>
-                <DressList dress={this.props.dress} url={url}/>
+                <div className="home-logo">
+                    <img src={shoppingGirl} alt="shopping-girl"/>
+                    <div>
+                        <p><span>Buy</span> &amp; <span>Sell</span></p>
+                        <p>hats, jackets and jumpers</p>
+                        <a href="#product-list">Show them</a>
+                    </div>
+                </div>
+                <DressSelection countPerPage={countPerPage} changeCountPerPage={this.changeCountPerPage}/>
+                <DressList countPerPage={countPerPage} dress={this.props.dress} url={url}/>
                 <Pagination currentPage={page} length={countPerPage} itemsCount={totalDressCount} />
             </div>
         );

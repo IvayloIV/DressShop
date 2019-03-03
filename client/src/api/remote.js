@@ -107,8 +107,20 @@ async function profile(username) {
     return await requester(`user/profile/${username}`, 'GET', true);
 }
 
+async function getUsers() {
+    return await requester(`user/all`, 'GET', true);
+}
+
+async function blockUser(userId) {
+    return await requester(`user/block/${userId}`, 'POST', true);
+}
+
+async function unblockUser(userId) {
+    return await requester(`user/unblock/${userId}`, 'POST', true);
+}
+
 export { register, login, getDressByPage, dressCount, createCategory, 
     getAllCategories, createDress, editDress, detailsDress, removeDress,
     getComments, createComment, removeComment, likeDress, dislikeDress,
     getByCategory, addToCart, getMyCart, removeFromCart,
-    checkout, profile };
+    checkout, profile, getUsers, blockUser, unblockUser };

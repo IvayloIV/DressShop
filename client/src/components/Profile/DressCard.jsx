@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Dress(props) {
+function DressCard(props) {
     const { id, category, imageUrl, name, likesCount, size, cost, date, isBought } = props;
     return (
         <div>
@@ -23,4 +23,4 @@ function Dress(props) {
     )
 }
 
-export default Dress;
+export default DressCard;

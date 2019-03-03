@@ -27,7 +27,7 @@ class DetailsCard extends Component {
         const isBlocked = localStorage.getItem('blocked') === 'true';
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
         const permissions = isAdmin || creator._id === userId;
-        const isNotOwner = creator !== userId;
+        const isNotOwner = creator._id !== userId;
         
         return (
             <div>
@@ -66,10 +66,10 @@ class DetailsCard extends Component {
                         <a onClick={() => this.props.likeDress(id, userId)} href="javascript:void(0)"><i className="far fa-heart"></i></a>
                 ) : null}
                 {isBought && <h3>Product was bought.</h3>}
-                {userCart && <h3>Product is in cart.</h3>}
+                {!isBought && userCart && <h3>Product is in cart.</h3>}
                 {authToken && isNotOwner && !userCart && !isBought && <button onClick={this.addToCart}>Add to cart</button>}
-                {permissions && <Link to={`/dress/edit/${id}`}><span>Edit</span></Link>}
-                {permissions && <Link to={`/dress/remove/${id}`}><span>Delete</span></Link>}
+                {!isBought && !userCart && permissions && <Link to={`/dress/edit/${id}`}><span>Edit</span></Link>}
+                {!isBought && !userCart && permissions && <Link to={`/dress/remove/${id}`}><span>Delete</span></Link>}
             </div>
         )
     }

@@ -1,0 +1,56 @@
+.footer {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cg fill='%239C92AC' fill-opacity='0.13'%3E%3Cpath fill-rule='evenodd' d='M0 0h4v4H0V0zm4 4h4v4H4V4z'/%3E%3C/g%3E%3C/svg%3E");
+    border-top: 2px solid #dfdcdc;
+
+    &-info {
+        display: flex;
+        justify-content: space-between;
+        width: 94%;
+        margin: 0 auto;
+        padding: 1.5rem 0;
+        align-items: center;
+
+        span:nth-of-type(1) {
+            font-style: italic;
+            font-size: 1.04rem;
+        }
+
+        span:nth-of-type(2) {
+            margin-right: 6rem;
+            font-size: 1.4rem;
+
+            i {
+                color: #e84f9c;
+            }
+        }
+
+        span:last-of-type i{
+            border-radius: 50%;
+            margin: 0 0.3rem;
+            color: white;
+            
+            &:first-of-type {
+                padding: 0.7rem 0.9rem;
+                background: #4064AC;
+            }
+            
+            &:nth-of-type(2){
+                padding: 0.7rem 0.7rem;
+                background: #1C9CEB;
+            }
+
+            &:nth-of-type(3){
+                padding: 0.7rem 0.6rem;
+                background: #FF0000;
+            }
+        }
+    }
+
+    &-copy {
+        background: linear-gradient(to bottom, #b16088 0%,#da2a82 99%);
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        font-weight: 700;
+    }
+}

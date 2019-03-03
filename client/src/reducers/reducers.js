@@ -3,6 +3,7 @@ import { dressReducer } from './dressReducer';
 import { categoryReducer } from './categoryReducer';
 import { commentReducer } from './commentReducer';
 import { profileReducer } from './profileReducer';
+import { usersReducer } from './usersReducer';
 
 export default {
     register: registerReducer,
@@ -10,5 +11,6 @@ export default {
     dress: dressReducer,
     categories: categoryReducer,
     comments: commentReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    users: usersReducer
 };

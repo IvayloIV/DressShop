@@ -38,6 +38,18 @@ class Edit extends Component {
                 this.props.history.push('/');
                 return;
             }
+
+            if (dress.isBought) {
+                toast.error('Product was bought.');
+                this.props.history.push('/');
+                return;
+            }
+
+            if (dress.userCart) {
+                toast.error('Product is in user cart.');
+                this.props.history.push('/');
+                return;
+            }
             
             const isNotAdmin = localStorage.getItem('isAdmin') === 'false';
             const isNotOwner = dress.creator._id !== localStorage.getItem('userId');

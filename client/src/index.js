@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers/reducers';
 
-import './index.css';
+import './index.scss';
 import 'react-toastify/dist/ReactToastify.min.css'; 
 
 const store = createStore(

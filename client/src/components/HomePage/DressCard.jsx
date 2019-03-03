@@ -20,31 +20,33 @@ class DressCard extends Component {
     }
 
     render() {
-        const {id, category, imageUrl, name, likesCount, size, creator, cost, date, url} = this.props;
+        const {id, category, imageUrl, name, likesCount, size, creator, cost, date, url, commentsCount} = this.props;
         const userId = localStorage.getItem('userId');
         const authToken = localStorage.getItem('authToken');
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
         const permissions = isAdmin || creator === userId;
         const isNotOwner = creator !== userId;
         let inCategory = url.startsWith('/dress/category');
+
         return (
-            <div>
+            <div className="product-cart">
                 <img src={imageUrl} alt="image-dress"/>
-                <span>Name:</span>
-                <p>{name}</p>
-                <span>Size:</span>
-                <p>{size}</p>
-                <span>Likes count:</span>
-                <p>{likesCount}</p>
-                <span>Cost:</span>
-                <p>{cost}lv.</p>
-                <span>Creation date:</span>
-                <p>{new Date(date).toLocaleString()}</p>
-                {authToken && isNotOwner && <button onClick={this.addToCart}>Add to cart</button>}
-                {!inCategory && <Link to={`/dress/category/${category}`}><span>View all "{category}"</span></Link>}
-                <Link to={`/dress/details/${id}`}><span>Details</span></Link>
-                {permissions && <Link to={`/dress/edit/${id}`}><span>Edit</span></Link>}
-                {permissions && <Link to={`/dress/remove/${id}`}><span>Delete</span></Link>}
+                <div>
+                    <p><span>{name}</span><span>{cost}lv.</span></p>
+                    <p>Size: {size}</p>
+                    <div className="product-info">
+                        <span><i className="fas fa-thumbs-up"></i> {likesCount}</span>
+                        <span><i className="far fa-clock"></i> {new Date(date).toLocaleDateString()}</span>
+                        <span><i className="fas fa-comments"></i> {commentsCount}</span>
+                    </div>
+                </div>
+                <div>
+                    {authToken && isNotOwner && <button className="add" onClick={this.addToCart}>Add to <i className="fas fa-shopping-cart"></i></button>}
+                    {!inCategory && <Link className="category" to={`/dress/category/${category}`}><span>{category}</span></Link>}
+                    <Link className="details" to={`/dress/details/${id}`}><i className="fas fa-info"></i></Link>
+                    {permissions && <Link className="edit" to={`/dress/edit/${id}`}><i className="far fa-edit"></i></Link>}
+                    {permissions && <Link className="remove" to={`/dress/remove/${id}`}><i className="fas fa-times"></i></Link>}
+                </div>
             </div>
         )
     }

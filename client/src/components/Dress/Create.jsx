@@ -30,6 +30,12 @@ class Create extends Component {
             return;
         }
 
+        if (localStorage.getItem('blocked') === 'true') {
+            toast.error('You are blocked.');
+            this.props.history.push('/');
+            return;
+        }
+
         this.props.getCategories().then(({ categories }) => {
             let firstCategory = '';
             if (categories && categories.length > 0) {

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { logoutAction } from './actions/authActions';
 
 import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 import RegisterPage from './components/Auth/RegisterPage';
 import LoginPage from './components/Auth/LoginPage';
 import HomePage from './components/HomePage/HomePage';
@@ -16,6 +17,7 @@ import DressDetails from './components/Dress/Details';
 import DressByCategory from './components/Dress/ByCategory';
 import CartPage from './components/Cart/CartPage';
 import ProfilePage from './components/Profile/ProfilePage';
+import UsersPage from './components/Users/UsersPage';
 
 class App extends Component {
     constructor(props) {
@@ -45,10 +47,12 @@ class App extends Component {
                     <Route exact path="/dress/category/:categoryName" component={DressByCategory} />
                     <Route exact path="/cart/my" component={CartPage} />
                     <Route exact path="/user/profile/:username" component={ProfilePage} />
+                    <Route exact path="/user/all" component={UsersPage} />
                     <Route exact path="/dress/:page" component={HomePage} />
                     <Route path="/login" component={LoginPage} />
                     <Route path="/register" component={RegisterPage} />
                 </Switch>
+                <Footer />
             </div>
         );
     }

@@ -1,0 +1,50 @@
+.home-logo {
+    background: linear-gradient(to bottom, #e1e0e1 0%,#f5f4f9 46%,#f5f4f9 99%);
+    display: flex;
+    padding: 2rem 0;
+    justify-content: center;
+
+    img {
+        width: 25%;
+        margin-right: 2rem;
+    }
+
+    div {
+        align-self: center;
+    }
+
+    p {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    p:first-of-type {
+        text-transform: uppercase;
+        font-size: 2rem;
+        margin: 1rem 0;
+        
+        span {
+            color: #FF0080;
+            border-bottom: 3px solid #FF0080;
+        }
+    }
+
+    p:last-of-type {
+        color: #1B1B1B;
+        font-size: 1.7rem;
+        margin: 0;
+        font-style: italic;
+    }
+
+    a {
+        padding: 0.9rem 1rem;
+        display: inline-block;
+        background: #FF0080;
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        outline: none;
+        margin-top: 1rem;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+}

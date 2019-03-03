@@ -5,6 +5,7 @@ const isAuth = require('../middleware/is-auth');
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 
+router.get('/all', isAuth, userController.getAll);
 router.post('/block/:userId', isAuth, userController.block);
 router.post('/unblock/:userId', isAuth, userController.unblock);
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import './header.scss';
 
 export default class Header extends Component {
     render() {
@@ -10,16 +11,24 @@ export default class Header extends Component {
 
         return (
             <header>
-                <NavLink exact to="/" activeClassName="active">Home</NavLink>
-                {isAdmin && <NavLink to="/category/create" activeClassName="active">Create category</NavLink>}
-                {loggedIn && <NavLink to="/dress/create" activeClassName="active">Create dress</NavLink>}
-                {loggedIn && <NavLink to={`/user/profile/${username}`} activeClassName="active">Profile</NavLink>}
-                {loggedIn && <NavLink to="/cart/my" activeClassName="active">My cart</NavLink>}
-                {loggedIn && <span>Welcome, {username}</span>}
-                {loggedIn && <span>Money: {Number(money).toFixed(2)}lv.</span>}
-                {loggedIn && <a href="javascript:void(0)" onClick={onLogout}>Logout</a>}
-                {!loggedIn && <NavLink to="/login" activeClassName="active">Login</NavLink>}
-                {!loggedIn && <NavLink to="/register" activeClassName="active">Register</NavLink>}
+                <h1 className="logo"><span>Dress </span><i className="fas fa-tshirt"></i> shop</h1>
+                <div className="menu">
+                    <div>
+                        <NavLink exact to="/" activeClassName="active">Home</NavLink>
+                        {isAdmin && <NavLink to="/category/create" activeClassName="active">Create category</NavLink>}
+                        {loggedIn && <NavLink to="/dress/create" activeClassName="active">Create dress</NavLink>}
+                        {isAdmin && <NavLink to="/user/all" activeClassName="active">Users</NavLink>}
+                    </div>
+                    <div>
+                        {loggedIn && <NavLink to={`/user/profile/${username}`} activeClassName="active">Profile</NavLink>}
+                        {loggedIn && <NavLink to="/cart/my" activeClassName="active">My cart</NavLink>}
+                        {loggedIn && <span>Welcome, {username}</span>}
+                        {loggedIn && <span>Money: {Number(money).toFixed(2)}lv.</span>}
+                        {loggedIn && <a href="javascript:void(0)" onClick={onLogout}>Logout</a>}
+                        {!loggedIn && <NavLink to="/login" activeClassName="active">Login</NavLink>}
+                        {!loggedIn && <NavLink to="/register" activeClassName="active">Register</NavLink>}
+                    </div>
+                </div>
             </header>
         );
     }

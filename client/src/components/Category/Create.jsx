@@ -4,13 +4,17 @@ import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Input from '../common/Input';
 import { createCategoryAction } from '../../actions/categoryActions';
+import { name } from '../../validations/category';
+
+import './create.scss';
 
 class Create extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            name: ''
+            name: '',
+            nameValidation: ''
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -25,7 +29,7 @@ class Create extends Component {
     }
 
     onChangeHandler(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value, nameValidation: name(e.target.value) });
     }
 
     onSubmitHandler(e) {
@@ -44,17 +48,25 @@ class Create extends Component {
     }
 
     render() {
+        const { nameValidation } = this.state;
+
         return (
-            <div>
-                <form onSubmit={this.onSubmitHandler}>
-                    <Input
-                        name="name"
-                        value={this.state.name}
-                        onChange={this.onChangeHandler}
-                        label="Name"
-                    />
-                    <input type="submit" value="Create" />
-                </form>
+            <div className="create-category">
+                <div className="create-category-container">
+                    <div className="top-category">
+                        <h2>Create category</h2>
+                    </div>
+                    <form onSubmit={this.onSubmitHandler}>
+                        <Input
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.onChangeHandler}
+                            label="Name"
+                            validation={nameValidation}
+                        />
+                        <input type="submit" value="Create" />
+                    </form>
+                </div>
             </div>
         )
     }

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Input from '../common/Input';
 import { loginAction, redirect } from '../../actions/authActions';
+import validations from '../../validations/login';
+
+import './login.scss';
+import padlock from '../../images/padlock.png';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -11,7 +15,11 @@ class LoginPage extends Component {
 
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            validations: {
+                emailValidation: '',
+                passwordValidation: '',
+            }
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -19,13 +27,24 @@ class LoginPage extends Component {
     }
 
     onChangeHandler(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevState => { 
+            prevState['validations'][name + 'Validation'] = validations[name](value);
+            return { [name]: value, validations: prevState.validations };
+        });
     }
 
     onSubmitHandler(e) {
         e.preventDefault();
         const { email, password } = this.state;
-		//Validations
+        const { emailValidation, passwordValidation } = this.state.validations;
+
+        if (emailValidation !== '' || passwordValidation !== '' ) {
+            toast.error('Check form for errors.');
+            return;
+        }
+
         this.props.login(email, password);
     }
 
@@ -39,25 +58,37 @@ class LoginPage extends Component {
     }
 
     render() {
+        const { emailValidation, passwordValidation } = this.state.validations;
+
         return (
-            <div className="container">
-                <h1>Login</h1>
-                <form onSubmit={this.onSubmitHandler}>
-                    <Input
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.onChangeHandler}
-                        label="Email"
-                    />
-                    <Input
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.onChangeHandler}
-                        label="Password"
-                    />
-                    <input type="submit" value="Login" />
-                </form>
+            <div className="login">
+                <div className="login-container">
+                    <div className="login-image">
+                        <img src={padlock} alt="padlock"/>
+                    </div>
+                    <div className="login-form">
+                        <h2>Login</h2>
+                        <form onSubmit={this.onSubmitHandler}>
+                            <Input
+                                name="email"
+                                value={this.state.email}
+                                onChange={this.onChangeHandler}
+                                label="Email"
+                                validation={emailValidation}
+                            />
+                            <Input
+                                name="password"
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.onChangeHandler}
+                                label="Password"
+                                validation={passwordValidation}
+                            />
+                            <p><Link to="/register">You dont have registration?</Link></p>
+                            <input type="submit" value="&#10148;" />
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     }

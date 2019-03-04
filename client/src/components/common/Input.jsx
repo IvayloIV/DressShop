@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import './input.scss';
 
 
 export default class Input extends Component {
     render() {
-        const { name, type = 'text', value, onChange, label } = this.props;
+        const { name, type = 'text', value, onChange, label, validation } = this.props;
         return (
-            <div>
-                <label htmlFor={name}>{label}:</label>
+            <div className="form-input">
                 <input
                     onChange={onChange}
                     name={name}
@@ -15,6 +15,7 @@ export default class Input extends Component {
                     value={value} 
                     placeholder={label} 
                 />
+                <div className="validation">{validation}</div>
             </div>
         );
     }

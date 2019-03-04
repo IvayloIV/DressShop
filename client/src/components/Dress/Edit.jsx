@@ -6,6 +6,9 @@ import Input from '../common/Input';
 import { getCategoriesAction } from '../../actions/categoryActions';
 import { editDressAction, detailsDressAction } from '../../actions/dressActions';
 
+import './create-edit.scss';
+import validations from '../../validations/create-editDress';
+
 class Edit extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +19,14 @@ class Edit extends Component {
             name: 'Loading...',
             imageUrl: 'Loading...',
             size: 'Loading...',
-            description: 'Loading...'
+            description: 'Loading...',
+            validations: {
+                costValidation: '',
+                nameValidation: '',
+                imageUrlValidation: '',
+                sizeValidation: '',
+                descriptionValidation: ''
+            }
         };
 
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -70,14 +80,28 @@ class Edit extends Component {
     }
 
     onChangeHandler(e) {
-        this.setState({ [e.target.name]: e.target.value });
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState(prevState => {
+            if (name !== 'category') {
+                prevState['validations'][name + 'Validation'] = validations[name](value);
+            }
+
+            return { [name]: value, validations: prevState.validations };
+        });
     }
 
     onSubmitHandler(e) {
         e.preventDefault();
         const { category, cost, name, imageUrl, size, description } = this.state;
         const { id } = this.props.match.params;
-        //Validations
+        const { costValidation, nameValidation, imageUrlValidation, sizeValidation, descriptionValidation } = this.state.validations;
+
+        if (costValidation !== '' || nameValidation !== '' || imageUrlValidation !== '' ||
+            sizeValidation !== '' || descriptionValidation !== '') {
+            toast.error('Check form for errors.');
+            return;
+        }
 
         this.props.editDress(
             id,
@@ -96,47 +120,68 @@ class Edit extends Component {
 
     render() {
         const { category, cost, name, imageUrl, size, description } = this.state;
+        const { costValidation, nameValidation, imageUrlValidation, sizeValidation, descriptionValidation } = this.state.validations;
 
         return (
-            <div>
-                <form onSubmit={this.onSubmitHandler}>
-                    <Input
-                        name="name"
-                        value={name}
-                        onChange={this.onChangeHandler}
-                        label="Name"
-                    />
-                    <Input
-                        name="imageUrl"
-                        value={imageUrl}
-                        onChange={this.onChangeHandler}
-                        label="ImageUrl"
-                    />
-                    <Input
-                        name="cost"
-                        value={cost}
-                        onChange={this.onChangeHandler}
-                        label="Cost"
-                        type="number"
-                    />
-                    <label>Description</label>
-                    <textarea rows="7" cols="30" name="description" onChange={this.onChangeHandler} value={description} />
-                    <Input
-                        name="size"
-                        value={size}
-                        onChange={this.onChangeHandler}
-                        label="Size"
-                    />
-                    <select name="category" value={category} onChange={this.onChangeHandler}>
-                        {this.props.categories.map(c => (
-                            <option key={c._id} value={c._id}>
-                                {c.name}
-                            </option>
-                        ))}
-                    </select>
-                    <Link to="/">Cancel</Link>
-                    <input type="submit" value="Edit" />
-                </form>
+            <div className="edit-dress">
+                <div className="edit-dress-container">
+                    <form onSubmit={this.onSubmitHandler}>
+                        <h2>Edit dress</h2>
+                        <label htmlFor="name">Name:</label>
+                        <Input
+                            name="name"
+                            value={name}
+                            onChange={this.onChangeHandler}
+                            label="Name"
+                            validation={nameValidation}
+                        />
+                        <label htmlFor="imageUrl">Image:</label>
+                        <Input
+                            name="imageUrl"
+                            value={imageUrl}
+                            onChange={this.onChangeHandler}
+                            label="ImageUrl"
+                            validation={imageUrlValidation}
+                        />
+                        <div className="together-fields">
+                            <label htmlFor="cost">Cost:&nbsp;</label>
+                            <Input
+                                name="cost"
+                                value={cost}
+                                onChange={this.onChangeHandler}
+                                label="Cost"
+                                type="number"
+                                validation={costValidation}
+                            />
+                            &nbsp;&nbsp;
+                            <label htmlFor="size">Size:&nbsp;</label>
+                            <Input
+                                name="size"
+                                value={size}
+                                onChange={this.onChangeHandler}
+                                label="Size"
+                                validation={sizeValidation}
+                            />
+                        </div>
+                        <label htmlFor="description">Description:</label>
+                        <Input
+                            name="description"
+                            value={description}
+                            onChange={this.onChangeHandler}
+                            label="Description"
+                            validation={descriptionValidation}
+                        />
+                        <p>Choose category:</p>
+                        <select name="category" value={category} onChange={this.onChangeHandler}>
+                            {this.props.categories.map(c => (
+                                <option key={c._id} value={c._id}>
+                                    {c.name}
+                                </option>
+                            ))}
+                        </select>
+                        <input type="submit" value="Edit" />
+                    </form>
+                </div>
             </div>
         )
     }

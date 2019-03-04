@@ -9,7 +9,7 @@ import Footer from './components/common/Footer';
 import RegisterPage from './components/Auth/RegisterPage';
 import LoginPage from './components/Auth/LoginPage';
 import HomePage from './components/HomePage/HomePage';
-import CategoryCreate from './components/Catalog/Create';
+import CategoryCreate from './components/Category/Create';
 import DressCreate from './components/Dress/Create';
 import DressEdit from './components/Dress/Edit';
 import DressRemove from './components/Dress/Remove';

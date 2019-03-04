@@ -3,7 +3,7 @@ const User = require('../models/User');
 const encryption = require('../util/encryption');
 
 function validateUser(req) {
-	const { email, username, password, firstName, lastName, age } = req.body;
+	const { email, username, password, firstName, lastName, age, imageUrl } = req.body;
 	let messages = [];
 
 	if (!email || email.length === 0) {
@@ -14,24 +14,28 @@ function validateUser(req) {
 		messages.push('Invalid email.');
 	}
 
-	if (!username || username.length < 3) {
+	if (!username || username.length < 4) {
 		messages.push('Username must be more than 3 symbols.');
 	}
 
 	if (!password || password.length < 4) {
-		messages.push('Password must be more than 4 symbols.');
+		messages.push('Password must be more than 3 symbols.');
 	}
 
 	if (!firstName || firstName.length < 4) {
-		messages.push('First name must be more than 4 symbols.');
+		messages.push('First name must be more than 3 symbols.');
 	}
 
 	if (!lastName || lastName.length < 4) {
-		messages.push('Last name must be more than 4 symbols.');
+		messages.push('Last name must be more than 3 symbols.');
 	}
 
 	if (isNaN(age) || Number(age) < 0) {
 		messages.push('Age must be positive number.');
+	}
+	
+	if (imageUrl.length !== 0 && !imageUrl.startsWith('http') && !imageUrl.startsWith('https')) {
+		messages.push('Image must start with http or https.');
 	}
 
 	return messages;

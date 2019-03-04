@@ -4,6 +4,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { detailsDressAction, removeDressAction } from '../../actions/dressActions';
 
+import './remove.scss';
+
 class Edit extends Component {
     constructor(props) {
         super(props);
@@ -71,33 +73,24 @@ class Edit extends Component {
             return null;
         }
         
-        const { category, cost, name, imageUrl, size, description } = this.props.dress[0];
+        const { cost, name, imageUrl, description } = this.props.dress[0];
 
         return (
-            <div>
-                <img src={imageUrl} alt="image-dress"/>
-                <div>
-                    Category:
-                    <span>{category.name}</span>
+            <div className="dress-remove">
+                <h2>Remove</h2>
+                <div className="dress-remove-container">
+                    <div className="dress-remove-header">
+                        <img src={imageUrl} alt="dress-image"/>
+                        <h3>{name}</h3>
+                    </div>
+                    <div className="dress-remove-main">
+                        <p className="description">{description}</p>
+                        <div>
+                            <p>Price: <span>{cost}lv.</span></p>
+                            <button onClick={this.removeDressHandler}>Delete</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    Cost:
-                    <span>{cost}</span>
-                </div>
-                <div>
-                    Name:
-                    <span>{name}</span>
-                </div>
-                <div>
-                    Size:
-                    <span>{size}</span>
-                </div>
-                <div>
-                Description:
-                <span>{description}</span>
-                </div>
-                <Link to="/">Cancel</Link>
-                <button onClick={this.removeDressHandler}>Delete</button>
             </div>
         )
     }

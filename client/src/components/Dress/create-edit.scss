@@ -1,0 +1,75 @@
+div.create-dress, div.edit-dress {
+    padding: 2.5rem;
+    background: linear-gradient(135deg, #e9e8ed 0%,#f4f4f4 100%);
+
+    &-container {
+        width: 70%;
+        margin: 0 auto;
+        padding: 2.5rem 2rem;
+        box-sizing: border-box;
+        background-image: url("../../images/create-image.jpg");
+        background-size: cover;
+
+        h2 {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 600;
+            font-size: 1.6rem;
+        }
+
+        form {
+            width: 48%;
+            text-align: center;
+
+            input:not([type="submit"]), select {
+                border: 1px solid #CCCCCC;
+                padding: 0.6rem 1rem;
+                border-radius: 2rem;
+                box-sizing: border-box;
+                margin: 0;
+                color: #666666;
+                
+                &::placeholder {
+                    color: #666666;
+                }
+            }
+
+            input[type="submit"] {
+                background-color: #AE3C33;
+                color: white;
+                border: none;
+                padding: 0.65rem 2.4rem;
+                border-radius: 2rem;
+                font-size: 0.95rem;
+                text-transform: uppercase;
+                margin-top: 1.4rem;
+                cursor: pointer;
+                outline: none;
+
+                &:hover {
+                    background-color: rgb(141, 48, 41);
+                }
+            }
+
+            p {
+                margin: 0 0 0.7rem;
+            }
+            
+            select {
+                width: 100%;
+                outline: none;
+                background: none;
+            }
+
+            .together-fields {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+
+                .form-input {
+                    width: 49%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+div.dress-remove {
+    text-align: center;
+    background: linear-gradient(to bottom, #a38dd1 0%, #cda6dd 45%, #f9c1ea 100%);
+    padding: 3rem 0 5rem 0;
+
+    h2 {
+        color: white;
+        text-shadow: 3px 4px 9px black;
+        font-size: 2rem;
+        margin-top: 0;
+    }
+
+    &-container {
+        width: 30%;
+        margin: 0 auto;
+        background: rgb(247, 246, 250);
+        padding: 1rem 0 1.7rem 0;
+        border-radius: 0.3rem;
+        border-top: 4px solid #FF0080;
+        box-shadow: 4px 4px 34px 0px rgba(0,0,0,0.35);
+    }
+
+    &-header {
+        border-bottom: 2px solid #E6E6E6;
+
+        img {
+            width: 51%;
+        }        
+        
+        h3 {
+            color: #E96B97;
+            font-size: 1.79rem;
+            margin: 0;
+            padding: 1rem 0;
+        }
+    }
+
+    &-main {
+        padding: 0 1rem;
+
+        .description {
+            color: #a5abb0;
+            padding: 1rem 0.6rem;
+            width: 69%;
+            margin: 1rem auto;
+        }
+
+        div:last-of-type {
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+                font-size: 1.05rem;
+            }
+
+            span {
+                font-size: 1.2rem;
+                font-weight: 800;
+            }
+
+            button {
+                background: #F04785;
+                border: none;
+                padding: 0.72rem 2.5rem;
+                color: white;
+                font-size: 1.05rem;
+                font-weight: 600;
+                border-radius: 2rem;
+                outline: none;
+                cursor: pointer;
+
+                &:hover {
+                    background: rgb(206, 62, 115);
+                }
+            }
+        }
+    }
+}

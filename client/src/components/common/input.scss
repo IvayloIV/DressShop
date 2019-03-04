@@ -1,0 +1,26 @@
+div.form-input {
+    input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid #333333;
+        margin: 0.6rem 0 0.5rem 0;
+        font-size: 1rem;
+        color: #CCCCCC;
+        width: 100%;
+        padding-bottom: 0.4rem;
+        outline: none;
+        font-family: inherit;
+        font-weight: 400;
+
+        &::placeholder {
+            color: #CCCCCC;
+        }
+
+    }
+
+    .validation {
+        color: #db1515;
+        font-size: 0.8rem;
+        min-height: 1.3rem;
+    }
+}

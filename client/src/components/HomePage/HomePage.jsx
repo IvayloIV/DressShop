@@ -22,10 +22,10 @@ class HomePage extends Component {
             newPage: false,
             loading: true
         }
-
+        
         this.changeCountPerPage = this.changeCountPerPage.bind(this);
     }
-
+    
     componentDidMount() {
         const page = this.props.match.params.page || 1;
         this.props.getDress(Number(page), this.state.countPerPage);

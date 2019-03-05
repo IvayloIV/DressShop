@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { getMyCartAction, removeFromCartAction, checkoutAction } from '../../actions/cartActions';
 
 import DressCard from './DressCard';
+import './cart.scss';
 
 export class CartPage extends Component {
     constructor(props) {
@@ -42,12 +43,13 @@ export class CartPage extends Component {
 
     checkoutHandler() {
         //Check money
+        const username = localStorage.getItem('username');
         this.props.checkout()
             .then((json) => {
                 if (json.success) {
                     const money = Number(localStorage.getItem('money'));
                     localStorage.setItem('money', (money - json.spendMoney));
-                    this.props.history.push('/'); //TODO: go to profile page
+                    this.props.history.push(`/user/profile/${username}`); //TODO: go to profile page
                 }
             });
     }
@@ -74,6 +76,7 @@ export class CartPage extends Component {
             return null;
         }
 
+        const { sort } = this.state;
         let totalCost = 0;
         let dress = this.sortDress(this.props.dress);
         let dressItems = dress.map(d => {
@@ -87,7 +90,6 @@ export class CartPage extends Component {
                     name={d.name}
                     likesCount={d.likes.length}
                     size={d.size}
-                    creator={d.creator.username}
                     cost={d.cost}
                     date={d.creationDate}
                     removeFromCart={this.props.removeFromCart}
@@ -96,16 +98,28 @@ export class CartPage extends Component {
         });
 
         return (
-            <div>
-                {dressItems.length === 0 ? <Link to="/">Go and add products.</Link> :
+            <div className="cart">
+                {dressItems.length === 0 ? <div className="productMissing"><Link to="/">Go and add products.</Link></div> :
                     <div>
-                        <div>
-                            Sort by cost:
-                            <button onClick={() => this.sortHandler(1)}>Ascending</button>
-                            <button onClick={() => this.sortHandler(-1)}>Descending</button>
+                        <div className="cart-sort">
+                            <span>Sort by cost:</span>
+                            <button className="ascending" onClick={() => this.sortHandler(-1)}><i className={'fas fa-arrow-circle-down' + (sort === -1 ? ' active' : '')}></i></button>
+                            <button className="descending" onClick={() => this.sortHandler(1)}><i className={'fas fa-arrow-circle-up' + (sort === 1 ? ' active' : '')}></i></button>
+                        </div>
+                        <div className="cart-header">
+                            <p>Image</p>
+                            <p>Name</p>
+                            <p>Size</p>
+                            <p>Likes count</p>
+                            <p>Cost</p>
+                            <p>Creation date</p>
+                            <p>Actions</p>
                         </div>
                         {dressItems}
-                        <p>Total cost: {totalCost}lv. <button onClick={this.checkoutHandler}>Checkout</button></p>
+                        <div className="cart-footer"> 
+                            <p><Link to="/"><i className="far fa-arrow-alt-circle-left"></i> <span>Go home</span></Link></p>
+                            <p><button onClick={this.checkoutHandler}> Total cost: {totalCost}lv. Checkout <i className="fas fa-check"></i></button></p>
+                        </div>
                     </div>
                 }
             </div>

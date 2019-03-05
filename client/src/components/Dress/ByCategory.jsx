@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { getDressByCategoryAction } from '../../actions/dressActions';
 
 import DressList from '../HomePage/DressList';
+import './byCategory.scss';
 
 export class ByCategory extends Component {
     constructor(props) {
@@ -65,20 +66,19 @@ export class ByCategory extends Component {
         const categoryName = this.props.match.params.categoryName;
         let { dress } = this.props;
         const url = this.props.match.url;
-        const { name } = this.state;
+        const { name, sort } = this.state;
         dress = this.getFilteredDress(dress);
 
         return (
-            <div>
+            <div className="byCategory">
                 <h3>Dress by category "{categoryName}" :</h3>
                 <div>
-                    Search by name:
-                    <input type="text" name="name" placeholder="name" value={name} onChange={this.onChangeHandler} />
+                    <input type="text" name="name" placeholder="name" value={name} placeholder="Search by name" onChange={this.onChangeHandler} />
                 </div>
-                <div>
+                <div className="sort">
                     Sort by date:
-                    <button onClick={() => this.sortHandler(1)}>Ascending</button>
-                    <button onClick={() => this.sortHandler(-1)}>Descending</button>
+                    <button className="ascending" onClick={() => this.sortHandler(1)}><i className={'fas fa-arrow-circle-down' + (sort === 1 ? ' active' : '')}></i></button>
+                    <button className="descending" onClick={() => this.sortHandler(-1)}><i className={'fas fa-arrow-circle-up' + (sort === -1 ? ' active' : '')}></i></button>
                 </div>
                 {dress.length > 0 ?
                     <DressList dress={dress} url={url}/> :

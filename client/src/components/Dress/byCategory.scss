@@ -1,0 +1,92 @@
+div.byCategory {
+    text-align: center;
+    background-color: #f1edf2;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23e1cbde' fill-opacity='0.47'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/svg%3E");
+    padding: 1rem 0;
+
+    .product-cart {
+        background-color: #fff;
+        margin: 3rem 0 2rem 0;
+    }
+
+    h3 {
+        margin: 0;
+        padding: 2rem;
+        font-size: 1.6rem;
+        text-decoration: underline;
+    }
+
+    h4 {
+        margin: 6rem;
+        font-size: 2rem;
+    }
+
+    input {
+        padding: 0.8rem 0.9rem;
+        width: 21%;
+        border-radius: 2rem;
+        border: 1px solid #b0a2a2;
+        font-size: 0.95rem;
+        outline: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        text-align: center;
+    }
+    
+    .sort {
+        color: #513737;
+        font-size: 1.2rem;
+        width: 20.9%;
+        margin: 0 auto;
+        padding: 0.4rem 1rem;
+        border-radius: 2rem;
+        background-color: #ffffff;
+        border: 1px solid #b0a2a2;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top: none;
+        
+        span {
+            position: relative;
+            top: -0.15rem;
+            right: 0.5rem;
+        }
+
+        .ascending, .descending {
+            background: none;
+            border: none;
+            padding: 0;
+            outline: none;
+
+            i {
+                font-size: 1.6rem;
+                padding: 0.2rem 0.3rem;
+                cursor: pointer;
+            }
+        }
+
+        .ascending i {
+            color: rgb(247, 99, 99);
+
+            &.active {
+                color: rgb(211, 63, 63);
+            }
+
+            &:hover {
+                color: rgb(211, 63, 63);
+            }
+        }
+        
+        .descending i {
+            color: rgb(147, 226, 29);
+
+            &.active {
+                color: rgb(119, 184, 22);
+            }
+
+            &:hover {
+                color: rgb(119, 184, 22);
+            }
+        }
+    }
+}

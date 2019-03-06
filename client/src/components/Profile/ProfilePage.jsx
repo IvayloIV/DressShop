@@ -5,7 +5,9 @@ import { toast } from 'react-toastify';
 import { getProfileAction } from '../../actions/profileActions';
 
 import DressList from './DressList';
+import DressMenu from './DressMenu';
 import Comments from './Comments';
+import './profilePage.scss';
 
 export class ProfilePage extends Component {
     constructor(props) {
@@ -13,7 +15,7 @@ export class ProfilePage extends Component {
 
         this.state = {
             loading: true,
-            boughtDress: false,
+            boughtDress: true,
             soldDress: false,
             comments: false,
         };
@@ -21,10 +23,11 @@ export class ProfilePage extends Component {
         this.onClickHandler = this.onClickHandler.bind(this);
     }
 
-    onClickHandler(e) {
+    async onClickHandler(e) {
         const name = e.target.name;
+        await this.setState({ boughtDress: false, soldDress: false, comments: false });
         this.setState(prevState => {
-            return {[name]: !prevState[name]};
+            return { [name]: !prevState[name] };
         })
     }
 
@@ -51,33 +54,46 @@ export class ProfilePage extends Component {
         if (this.state.loading) {
             return null;
         }
-        const { imageUrl, email, firstName, lastName, age, boughtClothes, comments, soldClothes, money } = this.props.profile;
+        const { imageUrl, email, firstName, lastName, age, boughtClothes, comments, soldClothes, money, username } = this.props.profile;
+
         return (
-            <div>
-                <div>
-                    <h3>My profile</h3>
+            <div className="profilePage">
+                <h3>My profile</h3>
+                <hr />
+                <div className="profilePage-info">
                     <img src={imageUrl} alt="image-profile" width="300" height="300" />
-                    <p>Email: {email}</p>
-                    <p>Full name: {firstName} {lastName}</p>
-                    <p>Age: {age}</p>
-                    <p>Money: {money}lv.</p>
+                    <div>
+                        <p>Email: {email}</p>
+                        <p>Username: {username}</p>
+                        <p>Full name: {firstName} {lastName}</p>
+                        <p>Age: {age}</p>
+                        <p>Money: {money}lv.</p>
+                    </div>
                 </div>
-                <a href="javascript:void(0)" name="boughtDress" onClick={this.onClickHandler}>View your bought dress.</a>
-                <br/>
-                <div style={{display: this.state.boughtDress ? 'block' : 'none'}}>
-                    <h3>Bought dress:</h3>
-                    {boughtClothes.length === 0 ? <p>0 bought dress.</p> : <DressList dress={boughtClothes}/>}
+                <div className="nav">
+                    <a href="javascript:void(0)" className="boughtNav" name="boughtDress" onClick={this.onClickHandler}>Bought dress</a>
+                    <a href="javascript:void(0)" className="soldNav" name="soldDress" onClick={this.onClickHandler}>Sold dress</a>
+                    <a href="javascript:void(0)" className="commentsNav" name="comments" onClick={this.onClickHandler}>Comments</a>
                 </div>
-                <a href="javascript:void(0)" name="soldDress" onClick={this.onClickHandler}>View your sold dress.</a>
-                <br/>
-                <div style={{display: this.state.soldDress ? 'block' : 'none'}}>
-                    <h3>Sold dress:</h3>
-                    {soldClothes.length === 0 ? <p>0 sold dress.</p> : <DressList dress={boughtClothes}/>}
+                <div className={this.state.boughtDress ? 'visible' : 'invisible'}>
+                    {boughtClothes.length === 0 ? <p className="dressList missingResults bought">0 bought dress.</p> :
+                        <div className="dressList bought">
+                            <DressMenu />
+                            <DressList dress={boughtClothes} />
+                        </div>
+                    }
                 </div>
-                <a href="javascript:void(0)" name="comments" onClick={this.onClickHandler}>View your comments.</a>
-                <div style={{display: this.state.comments ? 'block' : 'none'}}>
-                    <h3>Comments:</h3>
-                    {comments.length === 0 ? <p>0 comments.</p> : <Comments comments={comments}/>}
+                <div className={this.state.soldDress ? 'visible' : 'invisible'}>
+                    {soldClothes.length === 0 ? <p className="dressList missingResults sold">0 sold dress.</p> :
+                        <div className="dressList sold">
+                            <DressMenu />
+                            <DressList sold={true} dress={soldClothes} />
+                        </div>
+                    }
+                </div>
+                <div className={this.state.comments ? 'visible' : 'invisible'}>
+                    {comments.length === 0 ? <p className="comments-container missingResults">0 comments.</p> : 
+                    <Comments comments={comments} />}
                 </div>
             </div>
         )

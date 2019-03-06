@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getUsersAction, blockUserAction, unblockUserAction } from '../../actions/usersActions';
+import './users.scss';
 
 export class UsersPage extends Component {
     componentDidMount() {
@@ -16,21 +17,25 @@ export class UsersPage extends Component {
 
     render() {
         return (
-            <div>
-                {this.props.users.map(u => (
-                    <div key={u._id}>
-                        <img src={u.imageUrl} alt="image-profile" width="200" height="200" />
-                        <p>Email: {u.email}</p>
-                        <p>Full name: {u.firstName} {u.lastName}</p>
-                        <p>Age: {u.age}</p>
-                        <p>Money: {u.money}lv.</p>
-                        <Link to={`/user/profile/${u.username}`}>Details</Link>
-                        {u.blocked ? 
-                            <button onClick={() => this.props.unblockUser(u._id)}>Unblock</button> :
-                            <button onClick={() => this.props.blockUser(u._id)}>Block</button>
-                        }
-                    </div>
-                ))}
+            <div className="users">
+                <div className="users-container">
+                    {this.props.users.map(u => (
+                        <div className="user" key={u._id}>
+                            <img src={u.imageUrl} alt="image-profile" />
+                            <div>
+                                <h4>Name:</h4>
+                                <p>{u.firstName} {u.lastName}</p>
+                                <h4>Email:</h4>
+                                <p>{u.email}</p>
+                                <Link className="details" to={`/user/profile/${u.username}`}><i className="fas fa-info"></i></Link>
+                                {u.blocked ? 
+                                    <button className="unblock" onClick={() => this.props.unblockUser(u._id)}><i className="fas fa-unlock"></i></button> :
+                                    <button className="block" onClick={() => this.props.blockUser(u._id)}><i className="fas fa-ban"></i></button>
+                                }
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }

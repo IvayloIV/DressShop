@@ -2,23 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function DressCard(props) {
-    const { id, category, imageUrl, name, likesCount, size, cost, date, isBought } = props;
+    const { id, category, imageUrl, name, size, cost, date, isBought, sold } = props;
+
     return (
-        <div>
-            {isBought && <h3>SELLED</h3>}
-            <img src={imageUrl} alt="image-dress" />
-            <span>Name:</span>
+        <div className={'dress-cart' + (sold && isBought ? ' dressSold' : '')}>
+            <div className="dress-image">
+                <img src={imageUrl} alt="image-dress" />
+            </div>
             <p>{name}</p>
-            <span>Size:</span>
             <p>{size}</p>
-            <span>Likes count:</span>
-            <p>{likesCount}</p>
-            <span>Cost:</span>
             <p>{cost}lv.</p>
-            <span>Creation date:</span>
-            <p>{new Date(date).toLocaleString()}</p>
-            <Link to={`/dress/category/${category}`}><span>View all "{category}"</span></Link>
-            <Link to={`/dress/details/${id}`}><span>Details</span></Link>
+            <p>{new Date(date).toLocaleDateString()}</p>
+            <div>
+                <Link className="category" to={`/dress/category/${category}`}><span>{category}</span></Link>
+                <Link className="details" to={`/dress/details/${id}`}><i className="fas fa-info"></i></Link>
+            </div>
         </div>
     )
 }

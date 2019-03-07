@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import { GET_USERS_SUCCESS, BLOCK_USER_SUCCESS, UNBLOCK_USER_SUCCESS } from './actionTypes';
 import { getUsers, blockUser, unblockUser } from '../api/remote';
+import showMessage from './messageHandler';
 
 function getUsersSuccess(data) {
     return {
@@ -40,11 +40,9 @@ function blockUserAction(userId) {
     return (dispatch) => {
         return blockUser(userId)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
                     dispatch(blockUserSuccess(userId));
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.error);
                 }
 
                 return json;
@@ -56,11 +54,9 @@ function unblockUserAction(userId) {
     return (dispatch) => {
         return unblockUser(userId)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
                     dispatch(unblockUserSuccess(userId));
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.error);
                 }
 
                 return json;

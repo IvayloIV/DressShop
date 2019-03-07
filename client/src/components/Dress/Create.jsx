@@ -34,12 +34,6 @@ class Create extends Component {
     }
 
     componentDidMount() {
-        if (!localStorage.getItem('authToken')) {
-            toast.error('First you must login.');
-            this.props.history.push('/login');
-            return;
-        }
-
         if (localStorage.getItem('blocked') === 'true') {
             toast.error('You are blocked.');
             this.props.history.push('/');

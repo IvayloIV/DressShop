@@ -18,12 +18,12 @@ export default class Header extends Component {
                         {isAdmin && <NavLink to="/category/create" activeClassName="active">Create category</NavLink>}
                         {loggedIn && <NavLink to="/dress/create" activeClassName="active">Create dress</NavLink>}
                         {isAdmin && <NavLink to="/user/all" activeClassName="active">Users</NavLink>}
+                        {loggedIn && <NavLink to={`/user/profile/${username}`} activeClassName="active">Profile</NavLink>}
                     </div>
                     <div>
-                        {loggedIn && <NavLink to={`/user/profile/${username}`} activeClassName="active">Profile</NavLink>}
-                        {loggedIn && <NavLink to="/cart/my" activeClassName="active">My cart</NavLink>}
-                        {loggedIn && <span>Welcome, {username}</span>}
-                        {loggedIn && <span>Money: {Number(money).toFixed(2)}lv.</span>}
+                        {loggedIn && <NavLink to="/cart/my" activeClassName="active" className="cart-header"><i className="fas fa-shopping-cart"></i></NavLink>}
+                        {loggedIn && <span className="money">{Number(money).toFixed(2)}lv.</span>}
+                        {loggedIn && <span className="welcome">Welcome, {username}</span>}
                         {loggedIn && <a href="javascript:void(0)" onClick={onLogout}>Logout</a>}
                         {!loggedIn && <NavLink to="/login" activeClassName="active">Login</NavLink>}
                         {!loggedIn && <NavLink to="/register" activeClassName="active">Register</NavLink>}

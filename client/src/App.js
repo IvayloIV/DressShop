@@ -18,6 +18,8 @@ import DressByCategory from './components/Dress/ByCategory';
 import CartPage from './components/Cart/CartPage';
 import ProfilePage from './components/Profile/ProfilePage';
 import UsersPage from './components/Users/UsersPage';
+import PrivateRoute from './components/common/PrivateRoute';
+import UnauthorizedRoute from './components/common/UnauthorizedRoute';
 
 class App extends Component {
     constructor(props) {
@@ -39,18 +41,18 @@ class App extends Component {
                 <Header loggedIn={localStorage.getItem('authToken') != null} onLogout={this.onLogout} />
                 <Switch>
                     <Route exact path="/" component={HomePage} />
-                    <Route exact path="/category/create" component={CategoryCreate} />
-                    <Route exact path="/dress/create" component={DressCreate} />
-                    <Route exact path="/dress/edit/:id" component={DressEdit} />
-                    <Route exact path="/dress/remove/:id" component={DressRemove} />
-                    <Route exact path="/dress/details/:id" component={DressDetails} />
-                    <Route exact path="/dress/category/:categoryName" component={DressByCategory} />
-                    <Route exact path="/cart/my" component={CartPage} />
-                    <Route exact path="/user/profile/:username" component={ProfilePage} />
-                    <Route exact path="/user/all" component={UsersPage} />
+                    <PrivateRoute path="/category/create" roleAdmin={true} component={CategoryCreate} />
+                    <PrivateRoute path="/dress/create" component={DressCreate} />
+                    <PrivateRoute path="/dress/edit/:id" component={DressEdit} />
+                    <PrivateRoute path="/dress/remove/:id" component={DressRemove} />
+                    <Route path="/dress/details/:id" component={DressDetails} />
+                    <Route path="/dress/category/:categoryName" component={DressByCategory} />
+                    <PrivateRoute path="/cart/my" component={CartPage} />
+                    <PrivateRoute path="/user/profile/:username" component={ProfilePage} />
+                    <PrivateRoute path="/user/all" roleAdmin={true} component={UsersPage} />
                     <Route exact path="/dress/:page" component={HomePage} />
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/register" component={RegisterPage} />
+                    <UnauthorizedRoute path="/login" component={LoginPage} />
+                    <UnauthorizedRoute path="/register" component={RegisterPage} />
                 </Switch>
                 <Footer />
             </div>

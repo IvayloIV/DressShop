@@ -4,7 +4,7 @@ import CommentCard from './CommentCard';
 function CommentList(props) {
     const { comments } = props;
     return (
-        <div>
+        <div className="comments">
             {comments.map(d => (
                 <CommentCard
                     message={d.message}

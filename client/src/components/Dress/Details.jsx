@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Input from '../common/Input';
 import { detailsDressAction } from '../../actions/dressActions';
 import { getCommentsAction } from '../../actions/commentActions';
 
 import DetailsCard from './DetailsCard';
 import CreateForm from '../Comment/CreateForm';
 import CommentList from '../Comment/CommentList';
+import './details.scss';
 
 export class Detail extends Component {
     constructor(props) {
@@ -45,11 +45,15 @@ export class Detail extends Component {
         const token = localStorage.getItem('authToken');
         const isBlocked = localStorage.getItem('blocked') === 'true';
         return (
-            <div>
+            <div className="detailsPage">
                 <DetailsCard />
+                <div className="comments-header">
+                    <h2>Comments:</h2>
+                    <hr/>
+                </div>
                 {token ? 
-                    (isBlocked ?  <h3>You are blocked.</h3> : <CreateForm id={dress._id}/>) :
-                    <h3><Link to="/login">Login</Link> first to send messages.</h3>
+                    (isBlocked ?  <h3 className="authMissing">You are blocked.</h3> : <CreateForm id={dress._id}/>) :
+                    <h3 className="authMissing"><Link to="/login">Login</Link> first to send messages.</h3>
                 }
                 <CommentList comments={this.props.comments}/>
             </div>

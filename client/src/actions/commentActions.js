@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import { GET_COMMENTS_SUCCESS ,CREATE_COMMENT_SUCCESS, REMOVE_COMMENT_SUCCESS } from './actionTypes';
 import { getComments, createComment, removeComment } from '../api/remote';
+import showMessage from './messageHandler';
 
 function getCommentsSuccess(data) {
     return {
@@ -40,11 +40,9 @@ function createCommentAction(dressId, message, rating) {
     return (dispatch) => {
         return createComment(dressId, message, rating)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
                     dispatch(createCommentSuccess(json.comment));
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.message);
                 }
 
                 return json;
@@ -56,11 +54,9 @@ function removeCommentAction(dressId) {
     return (dispatch) => {
         return removeComment(dressId)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
                     dispatch(removeCommentSuccess(dressId));
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.message);
                 }
 
                 return json;

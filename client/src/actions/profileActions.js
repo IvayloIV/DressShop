@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { GET_PROFILE_SUCCESS } from './actionTypes';
 import { profile } from '../api/remote';
 

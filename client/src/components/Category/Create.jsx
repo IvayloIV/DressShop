@@ -21,13 +21,6 @@ class Create extends Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
-    componentDidMount() {
-        if (localStorage.getItem('isAdmin') === 'false') {
-            toast.error('You are not admin.');
-            this.props.history.push('/');
-        }
-    }
-
     onChangeHandler(e) {
         this.setState({ [e.target.name]: e.target.value, nameValidation: name(e.target.value) });
     }

@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import { GET_CATEGORIES_SUCCESS } from './actionTypes';
 import { createCategory, getAllCategories } from '../api/remote';
+import showMessage from './messageHandler';
 
 function getCategoriesSuccess(data) {
     return {
@@ -26,12 +26,7 @@ function createCategoryAction(name) {
     return (dispatch) => {
         return createCategory(name)
             .then(json => {
-                if (json.success) {
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.message);
-                }
-
+                showMessage(json);
                 return json;
             });
     };

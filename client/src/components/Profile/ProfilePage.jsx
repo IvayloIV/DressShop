@@ -32,18 +32,13 @@ export class ProfilePage extends Component {
     }
 
     componentDidMount() {
-        if (!localStorage.getItem('authToken')) {
-            toast.error('First you must login.');
-            this.props.history.push('/login');
-            return;
-        }
-
         const username = this.props.match.params.username;
         this.props.getProfile(username)
             .then(json => {
                 if (!json.success) {
                     toast.error(json.message);
                     this.props.history.push('/');
+                    return;
                 }
 
                 this.setState({ loading: false });

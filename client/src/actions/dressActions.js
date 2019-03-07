@@ -1,6 +1,6 @@
-import { toast } from 'react-toastify';
 import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS } from './actionTypes';
 import { getDressByPage, createDress, editDress, detailsDress, removeDress, likeDress, dislikeDress, getByCategory } from '../api/remote';
+import showMessage from './messageHandler';
 
 function getDressSuccess(data) {
     return {
@@ -73,12 +73,7 @@ function removeDressAction(id) {
     return (dispatch) => {
         return removeDress(id)
             .then(json => {
-                if (json.success) {
-                    toast.success(json.message);
-                } else {
-                    toast.error(json.error);
-                }
-
+                showMessage(json);
                 return json;
             });
     };
@@ -88,11 +83,9 @@ function likeDressAction(dressId, userId) {
     return (dispatch) => {
         return likeDress(dressId)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
-                    toast.success(json.message);
                     dispatch(likeDressSuccess(userId));
-                } else {
-                    toast.error(json.message);
                 }
 
                 return json;
@@ -104,11 +97,9 @@ function dislikeDressAction(dressId, userId) {
     return (dispatch) => {
         return dislikeDress(dressId)
             .then(json => {
+                showMessage(json);
                 if (json.success) {
-                    toast.success(json.message);
                     dispatch(dislikeDressSuccess(userId));
-                } else {
-                    toast.error(json.message);
                 }
 
                 return json;
@@ -127,19 +118,6 @@ function getDressByCategoryAction(categoryName) {
                 return json;
             });
     };
-}
-
-
-function showMessage(json) {
-    if (json.success) {
-        toast.success(json.message);
-    } else if (json.errors){
-        for (let error of json.errors) {
-            toast.error(error);
-        }
-    } else {
-        toast.error(json.message);
-    }
 }
 
 export { getDressAction, createDressAction, editDressAction, detailsDressAction, 

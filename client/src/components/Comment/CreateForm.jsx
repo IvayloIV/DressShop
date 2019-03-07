@@ -37,8 +37,9 @@ export class CreateForm extends Component {
         const { message, rating } = this.state;
 
         return (
-            <form onSubmit={this.onSubmitHandler}>
-                <textarea rows="10" cols="20" name="message" value={message} onChange={this.onChangeHandler}/>
+            <form onSubmit={this.onSubmitHandler} className="createForm">
+                <textarea rows="5" cols="20" placeholder="Create message" name="message" value={message} onChange={this.onChangeHandler}/>
+                <span>Rating: </span>
                 <select name="rating" value={rating} onChange={this.onChangeHandler}>
                     <option value="1">1</option>
                     <option value="2">2</option>

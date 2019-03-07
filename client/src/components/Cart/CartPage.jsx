@@ -42,25 +42,18 @@ export class CartPage extends Component {
     }
 
     checkoutHandler() {
-        //Check money
         const username = localStorage.getItem('username');
         this.props.checkout()
             .then((json) => {
                 if (json.success) {
                     const money = Number(localStorage.getItem('money'));
                     localStorage.setItem('money', (money - json.spendMoney));
-                    this.props.history.push(`/user/profile/${username}`); //TODO: go to profile page
+                    this.props.history.push(`/user/profile/${username}`);
                 }
             });
     }
 
     componentDidMount() {
-        if (!localStorage.getItem('authToken')) {
-            toast.error('First you must login.');
-            this.props.history.push('/login');
-            return;
-        }
-
         this.props.getMyCart()
             .then(json => {
                 if (!json.success) {

@@ -25,13 +25,8 @@ class Edit extends Component {
     }
 
     async componentDidMount() {
-        if (!localStorage.getItem('authToken')) {
-            toast.error('First you must login.');
-            this.props.history.push('/login');
-            return;
-        }
-
         const dressId = this.props.match.params.id;
+        
         try {
             const json = await this.props.detailsDress(dressId);
             const dress = json.dress;

@@ -21,55 +21,45 @@ class DetailsCard extends Component {
     }
 
     render() {
-        const { _id: id, cost, category, creationDate, description, imageUrl, likes, name, size, creator, isBought, userCart } = this.props.dress[0];
+        const { _id: id, cost, creationDate, description, imageUrl, name, size, creator, isBought, comments, userCart, likes } = this.props.dress[0];
         const userId = localStorage.getItem('userId');
         const authToken = localStorage.getItem('authToken');
         const isBlocked = localStorage.getItem('blocked') === 'true';
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
         const permissions = isAdmin || creator._id === userId;
         const isNotOwner = creator._id !== userId;
-        
+
         return (
-            <div>
-                <img src={imageUrl} alt="image-dress" />
-                <div>
-                    Category:
-                        <span>{category.name}</span>
+            <div className="detailsPage-container">
+                <div className="detailsPage-image">
+                    <img src={imageUrl} alt="image-dress" />
                 </div>
-                <div>
-                    Cost:
-                        <span>{cost}</span>
+                <div className="detailsPage-info">
+                    <div className="detailsPage-header">
+                        <span><i className="fas fa-thumbs-up"></i> {likes.length} likes</span>
+                        <span><i className="far fa-clock"></i> {new Date(creationDate).toLocaleDateString()}</span>
+                        <span><i className="fas fa-comments"></i> {comments.length} comments</span>
+                    </div>
+                    <div>
+                        <p>{name}</p>
+                        <p>{description}</p>
+                    </div>
+                    <div className="detailsPage-buttons">
+                        <p>Price: <span>{cost}lv.</span></p>
+                        <div>
+                            {(authToken && !isBlocked) ? (
+                                likes.indexOf(userId) > -1 ?
+                                    <a onClick={() => this.props.dislikeDress(id, userId)} href="javascript:void(0)"><i className="fas fa-heart"></i></a> :
+                                    <a onClick={() => this.props.likeDress(id, userId)} href="javascript:void(0)"><i className="far fa-heart"></i></a>
+                            ) : null}
+                            {isBought && <h3>Product was bought.</h3>}
+                            {!isBought && userCart && <h3>Product is in cart.</h3>}
+                            {authToken && isNotOwner && !userCart && !isBought && <button className="add" onClick={this.addToCart}>Add to <i className="fas fa-shopping-cart"></i></button>}
+                            {!isBought && !userCart && permissions && <Link className="edit" to={`/dress/edit/${id}`}><i className="far fa-edit"></i></Link>}
+                            {!isBought && !userCart && permissions && <Link className="remove" to={`/dress/remove/${id}`}><i className="fas fa-times"></i></Link>}
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    Name:
-                        <span>{name}</span>
-                </div>
-                <div>
-                    Size:
-                        <span>{size}</span>
-                </div>
-                <div>
-                    Description:
-                        <span>{description}</span>
-                </div>
-                <div>
-                    Creation date:
-                        <span>{new Date(creationDate).toLocaleDateString()}</span>
-                </div>
-                <div>
-                    Likes:
-                        <span>{likes.length}</span>
-                </div>
-                {(authToken && !isBlocked) ? (
-                    likes.indexOf(userId) > -1 ?
-                        <a onClick={() => this.props.dislikeDress(id, userId)} href="javascript:void(0)"><i className="fas fa-heart"></i></a> :
-                        <a onClick={() => this.props.likeDress(id, userId)} href="javascript:void(0)"><i className="far fa-heart"></i></a>
-                ) : null}
-                {isBought && <h3>Product was bought.</h3>}
-                {!isBought && userCart && <h3>Product is in cart.</h3>}
-                {authToken && isNotOwner && !userCart && !isBought && <button onClick={this.addToCart}>Add to cart</button>}
-                {!isBought && !userCart && permissions && <Link to={`/dress/edit/${id}`}><span>Edit</span></Link>}
-                {!isBought && !userCart && permissions && <Link to={`/dress/remove/${id}`}><span>Delete</span></Link>}
             </div>
         )
     }

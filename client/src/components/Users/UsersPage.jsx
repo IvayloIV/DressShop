@@ -7,12 +7,13 @@ import './users.scss';
 
 export class UsersPage extends Component {
     componentDidMount() {
-        if (localStorage.getItem('isAdmin') === 'false') {
-            toast.error('You are not admin.');
-            this.props.history.push('/');
-        }
-
-        this.props.getUsers();
+        this.props.getUsers().then((json) => {
+            if (!json.success) {
+                toast.error(json.message);
+                this.props.history.push('/');
+                return;
+            }
+        });
     }
 
     render() {

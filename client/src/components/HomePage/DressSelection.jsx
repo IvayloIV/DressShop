@@ -3,6 +3,7 @@ import './dress-selection.scss';
 
 function DressSelection(props) {
     const { changeCountPerPage, countPerPage } = props;
+    
     return (
         <div className="dress-selection">
             <div>Dress per page: </div>

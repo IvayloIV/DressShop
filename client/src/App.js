@@ -35,10 +35,12 @@ class App extends Component {
     }
 
     render() {
+        const { pathname } = this.props.location;
+
         return (
             <div className="App">
 				<ToastContainer closeButton={false}/>
-                <Header loggedIn={localStorage.getItem('authToken') != null} onLogout={this.onLogout} />
+                <Header pathname={pathname} loggedIn={localStorage.getItem('authToken') != null} onLogout={this.onLogout} />
                 <Switch>
                     <Route exact path="/" component={HomePage} />
                     <PrivateRoute path="/category/create" roleAdmin={true} component={CategoryCreate} />
@@ -50,7 +52,7 @@ class App extends Component {
                     <PrivateRoute path="/cart/my" component={CartPage} />
                     <PrivateRoute path="/user/profile/:username" component={ProfilePage} />
                     <PrivateRoute path="/user/all" roleAdmin={true} component={UsersPage} />
-                    <Route exact path="/dress/:page" component={HomePage} />
+                    <Route path="/dress/page/:page" component={HomePage} />
                     <UnauthorizedRoute path="/login" component={LoginPage} />
                     <UnauthorizedRoute path="/register" component={RegisterPage} />
                 </Switch>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { getMyCartAction, removeFromCartAction, checkoutAction } from '../../actions/cartActions';
+import { sortDressAction } from '../../actions/dressActions';
 
+import CartHeader from './CartHeader';
 import DressCard from './DressCard';
 import './cart.scss';
 
@@ -18,27 +19,11 @@ export class CartPage extends Component {
 
         this.checkoutHandler = this.checkoutHandler.bind(this);
         this.sortHandler = this.sortHandler.bind(this);
-        this.sortDress = this.sortDress.bind(this);
     }
 
-    sortHandler(type) {
-        this.setState({ sort: type });
-    }
-
-    sortDress(dress) {
-
-        const { sort } = this.state;
-        if (sort !== 0) {
-            dress = dress.sort((a, b) => {
-                if (this.state.sort === 1) {
-                    return a.cost - b.cost;
-                } else {
-                    return b.cost - a.cost;
-                }
-            });
-        }
-
-        return dress;
+    sortHandler(order) {
+        this.setState({ sort: order });
+        this.props.sortDress(order)
     }
 
     checkoutHandler() {
@@ -71,8 +56,7 @@ export class CartPage extends Component {
 
         const { sort } = this.state;
         let totalCost = 0;
-        let dress = this.sortDress(this.props.dress);
-        let dressItems = dress.map(d => {
+        let dressItems = this.props.dress.map(d => {
             totalCost += d.cost;
             return (
                 <DressCard
@@ -99,15 +83,7 @@ export class CartPage extends Component {
                             <button className="ascending" onClick={() => this.sortHandler(-1)}><i className={'fas fa-arrow-circle-down' + (sort === -1 ? ' active' : '')}></i></button>
                             <button className="descending" onClick={() => this.sortHandler(1)}><i className={'fas fa-arrow-circle-up' + (sort === 1 ? ' active' : '')}></i></button>
                         </div>
-                        <div className="cart-header">
-                            <p>Image</p>
-                            <p>Name</p>
-                            <p>Size</p>
-                            <p>Likes count</p>
-                            <p>Cost</p>
-                            <p>Creation date</p>
-                            <p>Actions</p>
-                        </div>
+                        <CartHeader />
                         {dressItems}
                         <div className="cart-footer"> 
                             <p><Link to="/"><i className="far fa-arrow-alt-circle-left"></i> <span>Go home</span></Link></p>
@@ -130,7 +106,8 @@ function mapDispatch(dispatch) {
     return {
         getMyCart: () => dispatch(getMyCartAction()),
         removeFromCart: (id) => dispatch(removeFromCartAction(id)),
-        checkout: () => dispatch(checkoutAction())
+        checkout: () => dispatch(checkoutAction()),
+        sortDress: (order) => dispatch(sortDressAction(order))
     };
 }
 

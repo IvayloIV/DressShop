@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Input from '../common/Input';
 import { getCategoriesAction } from '../../actions/categoryActions';
@@ -52,6 +52,7 @@ class Create extends Component {
     onChangeHandler(e) {
         const name = e.target.name;
         const value = e.target.value;
+        
         this.setState(prevState => {
             if (name !== 'category') {
                 prevState['validations'][name + 'Validation'] = validations[name](value);
@@ -98,7 +99,7 @@ class Create extends Component {
                             name="name"
                             value={name}
                             onChange={this.onChangeHandler}
-                            label="Title"
+                            label="Name"
                             validation={nameValidation}
                         />
                         <Input

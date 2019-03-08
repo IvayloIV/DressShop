@@ -1,4 +1,4 @@
-import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS } from './actionTypes';
+import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS, SORT_DRESS_SUCCESS } from './actionTypes';
 import { getDressByPage, createDress, editDress, detailsDress, removeDress, likeDress, dislikeDress, getByCategory } from '../api/remote';
 import showMessage from './messageHandler';
 
@@ -20,6 +20,13 @@ function dislikeDressSuccess(id) {
     return {
         type: DISLIKE_DRESS_SUCCESS,
         id
+    };
+}
+
+function sortDressSuccess(order) {
+    return {
+        type: SORT_DRESS_SUCCESS,
+        order
     };
 }
 
@@ -120,5 +127,12 @@ function getDressByCategoryAction(categoryName) {
     };
 }
 
+function sortDressAction(order) {
+    return (dispatch) => {
+        dispatch(sortDressSuccess(order));
+    };
+}
+
 export { getDressAction, createDressAction, editDressAction, detailsDressAction, 
-    removeDressAction, likeDressAction, dislikeDressAction, getDressByCategoryAction };
+    removeDressAction, likeDressAction, dislikeDressAction, getDressByCategoryAction,
+    sortDressAction };

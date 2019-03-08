@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { addToCartAction } from '../../actions/cartActions';
+import authValidations from '../../validations/auth';
 
 class DressCard extends Component {
     constructor(props) {
@@ -21,12 +22,9 @@ class DressCard extends Component {
 
     render() {
         const {id, category, imageUrl, name, likesCount, size, creator, cost, date, url, commentsCount} = this.props;
-        const userId = localStorage.getItem('userId');
         const authToken = localStorage.getItem('authToken');
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        const permissions = isAdmin || creator === userId;
-        const isNotOwner = creator !== userId;
-        let inCategory = url.startsWith('/dress/category');
+        const { permissions, isNotOwner } = authValidations(creator);
+        const inCategory = url.startsWith('/dress/category');
 
         return (
             <div className="product-cart">
@@ -51,7 +49,6 @@ class DressCard extends Component {
         )
     }
 }
-
 
 function mapDispatch(dispatch) {
     return {

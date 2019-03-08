@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './header.scss';
 
 export default class Header extends Component {
@@ -8,13 +8,14 @@ export default class Header extends Component {
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
         const username = localStorage.getItem('username');
         const money = localStorage.getItem('money');
+        const { pathname } = this.props;
 
         return (
             <header>
                 <h1 className="logo"><span>Dress </span><i className="fas fa-tshirt"></i> shop</h1>
                 <div className="menu">
                     <div>
-                        <NavLink exact to="/" activeClassName="active">Home</NavLink>
+                        <Link to="/" className={(pathname === '/' || pathname.startsWith('/dress/page')) ? 'active': ''}>Home</Link>
                         {isAdmin && <NavLink to="/category/create" activeClassName="active">Create category</NavLink>}
                         {loggedIn && <NavLink to="/dress/create" activeClassName="active">Create dress</NavLink>}
                         {isAdmin && <NavLink to="/user/all" activeClassName="active">Users</NavLink>}

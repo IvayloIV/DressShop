@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { detailsDressAction, removeDressAction } from '../../actions/dressActions';
-
+import loadDressValidation from '../../validations/loadDress';
 import './remove.scss';
 
 class Edit extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             loading: true
         };
+
         this.removeDressHandler = this.removeDressHandler.bind(this);
     }
 
@@ -30,28 +32,9 @@ class Edit extends Component {
         try {
             const json = await this.props.detailsDress(dressId);
             const dress = json.dress;
-            if (!dress) {
-                toast.error(json.message);
-                this.props.history.push('/');
-                return;
-            }
+            const isValid = loadDressValidation(dress);
 
-            if (dress.isBought) {
-                toast.error('Product was bought.');
-                this.props.history.push('/');
-                return;
-            }
-
-            if (dress.userCart) {
-                toast.error('Product is in user cart.');
-                this.props.history.push('/');
-                return;
-            }
-            
-            const isNotAdmin = localStorage.getItem('isAdmin') === 'false';
-            const isNotOwner = dress.creator._id !== localStorage.getItem('userId');
-            if (isNotAdmin && isNotOwner) {
-                toast.error('You are not owner of product.');
+            if (!isValid) {
                 this.props.history.push('/');
                 return;
             }

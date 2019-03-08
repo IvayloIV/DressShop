@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { createCommentAction } from '../../actions/commentActions';
 
 export class CreateForm extends Component {
@@ -21,10 +22,15 @@ export class CreateForm extends Component {
 
     onSubmitHandler(e) {
         e.preventDefault();
-        //Validations
-        
+
         const dressId = this.props.id;
         const { message, rating } = this.state;
+
+        if (message.length < 5 || message.length > 30) {
+            toast.error('Message must be between 5 and 30 symbols.');
+            return;
+        }
+
         this.props.createComment(dressId, message, Number(rating))
             .then(json => {
                 if (json.success) {

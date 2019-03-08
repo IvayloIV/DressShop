@@ -7,6 +7,7 @@ import { getProfileAction } from '../../actions/profileActions';
 import DressList from './DressList';
 import DressMenu from './DressMenu';
 import Comments from './Comments';
+import ProfileInfo from './ProfileInfo';
 import './profilePage.scss';
 
 export class ProfilePage extends Component {
@@ -55,16 +56,15 @@ export class ProfilePage extends Component {
             <div className="profilePage">
                 <h3>My profile</h3>
                 <hr />
-                <div className="profilePage-info">
-                    <img src={imageUrl} alt="image-profile" width="300" height="300" />
-                    <div>
-                        <p>Email: {email}</p>
-                        <p>Username: {username}</p>
-                        <p>Full name: {firstName} {lastName}</p>
-                        <p>Age: {age}</p>
-                        <p>Money: {money}lv.</p>
-                    </div>
-                </div>
+                <ProfileInfo
+                    imageUrl={imageUrl}
+                    email={email}
+                    firstName={firstName}
+                    lastName={lastName}
+                    age={age}
+                    money={money}
+                    username={username}
+                />
                 <div className="nav">
                     <a href="javascript:void(0)" className="boughtNav" name="boughtDress" onClick={this.onClickHandler}>Bought dress</a>
                     <a href="javascript:void(0)" className="soldNav" name="soldDress" onClick={this.onClickHandler}>Sold dress</a>

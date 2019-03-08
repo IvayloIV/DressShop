@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getDressByCategoryAction } from '../../actions/dressActions';
+import { getDressByCategoryAction, sortDressAction } from '../../actions/dressActions';
 
 import DressList from '../HomePage/DressList';
 import './byCategory.scss';
@@ -21,8 +21,9 @@ export class ByCategory extends Component {
         this.getFilteredDress = this.getFilteredDress.bind(this);
     }
 
-    sortHandler(type) {
-        this.setState({ sort: type });
+    sortHandler(order) {
+        this.setState({ sort: order });
+        this.props.sortDress(order)
     }
 
     onChangeHandler(e) {
@@ -30,29 +31,17 @@ export class ByCategory extends Component {
     }
 
     getFilteredDress(dress) {
-        const { sort, name } = this.state;
+        const { name } = this.state;
         if (name !== '') {
             dress = dress.filter(d => d.name.toLowerCase().indexOf(name.toLowerCase()) > -1);
-        }
-
-        if (sort !== 0) {
-            dress = dress.sort((a, b) => {
-                let aDate = new Date(a.creationDate);
-                let bDate = new Date(b.creationDate);
-                
-                if (sort === 1) {
-                    return aDate - bDate;
-                } else {
-                    return bDate - aDate;
-                }
-            });
         }
 
         return dress;
     }
 
     componentDidMount() {
-        const categoryName = this.props.match.params.categoryName
+        const { categoryName } = this.props.match.params;
+
         this.props.getByCategory(categoryName)
             .then(json => {
                 if (!json.success) {
@@ -97,7 +86,8 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
     return {
-        getByCategory: (categoryName) => dispatch(getDressByCategoryAction(categoryName))
+        getByCategory: (categoryName) => dispatch(getDressByCategoryAction(categoryName)),
+        sortDress: (order) => dispatch(sortDressAction(order))
     };
 }
 

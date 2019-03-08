@@ -1,4 +1,6 @@
-import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS, REMOVE_FROM_CART_SUCCESS } from '../actions/actionTypes';
+import { GET_DRESS_SUCCESS, LIKE_DRESS_SUCCESS, DISLIKE_DRESS_SUCCESS, 
+    REMOVE_FROM_CART_SUCCESS, CREATE_COMMENT_SUCCESS, REMOVE_COMMENT_SUCCESS, 
+    SORT_DRESS_SUCCESS } from '../actions/actionTypes';
 
 export function dressReducer(state = [], action) {
     switch (action.type) {
@@ -13,6 +15,15 @@ export function dressReducer(state = [], action) {
             return state.slice();
         case REMOVE_FROM_CART_SUCCESS:
             return state.filter(a => a._id !== action.id);
+        case CREATE_COMMENT_SUCCESS:
+            state[0].comments.push(action.data);
+            return state.slice();
+        case REMOVE_COMMENT_SUCCESS:
+            state[0].comments = state[0].comments.filter(c => c._id !== action.id);
+            return state.slice();
+        case SORT_DRESS_SUCCESS:
+            const order = action.order;
+            return state.sort((a, b) => (order === 1) ? a.cost - b.cost : b.cost - a.cost);
         default:
             return state;
     }

@@ -3,15 +3,18 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { likeDressAction, dislikeDressAction } from '../../actions/dressActions';
 import { addToCartAction } from '../../actions/cartActions';
+import authValidations from '../../validations/auth';
 
 class DetailsCard extends Component {
     constructor(props) {
         super(props);
+
         this.addToCart = this.addToCart.bind(this);
     }
 
     addToCart() {
         const id = this.props.dress[0]._id;
+
         this.props.addToCart(id)
             .then((json) => {
                 if (json.success) {
@@ -21,13 +24,12 @@ class DetailsCard extends Component {
     }
 
     render() {
-        const { _id: id, cost, creationDate, description, imageUrl, name, size, creator, isBought, comments, userCart, likes } = this.props.dress[0];
+        const { _id: id, cost, creationDate, description, imageUrl, name, creator, isBought, comments, userCart, likes } = this.props.dress[0];
+        const creatorId = creator._id;
         const userId = localStorage.getItem('userId');
         const authToken = localStorage.getItem('authToken');
         const isBlocked = localStorage.getItem('blocked') === 'true';
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        const permissions = isAdmin || creator._id === userId;
-        const isNotOwner = creator._id !== userId;
+        const { permissions, isNotOwner } = authValidations(creatorId);
 
         return (
             <div className="detailsPage-container">

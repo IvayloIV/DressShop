@@ -8,8 +8,8 @@ module.exports = {
         const { userId } = req.user;
         const {message, rating} = req.body;
 
-        if (!message || message.length < 10 || message.length > 150) {
-            res.status(400).json({ success: false, message: 'Message length is between 10 and 150 symbols.' });
+        if (!message || message.length < 5 || message.length > 30) {
+            res.status(400).json({ success: false, message: 'Message length is between 5 and 30 symbols.' });
             return;
         }
 

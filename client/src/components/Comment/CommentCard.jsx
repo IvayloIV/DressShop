@@ -18,10 +18,12 @@ class CommentCard extends Component {
         const userId = localStorage.getItem('userId');
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
         const permissions = isAdmin || creator === userId;
+        
         const stars = [];
         for (let i = 0; i < rating; i++) {
             stars.push(<i key={i} className="fas fa-star"></i>);
         }
+
         return (
             <div className="comment">
                 <p>{message}</p>

@@ -5,7 +5,7 @@ function DressCard(props) {
     const { id, category, imageUrl, name, size, cost, date, isBought, sold } = props;
 
     return (
-        <div className={'dress-cart' + (sold && isBought ? ' dressSold' : '')}>
+        <div className={'dress-cart' + ((sold && isBought) ? ' dressSold' : '')}>
             <div className="dress-image">
                 <img src={imageUrl} alt="image-dress" />
             </div>

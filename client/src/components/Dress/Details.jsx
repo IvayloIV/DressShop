@@ -21,6 +21,7 @@ export class Detail extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
+
         this.props.detailsDress(id)
             .then(json => {
                 if (!json.success) {
@@ -44,6 +45,7 @@ export class Detail extends Component {
         const dress = this.props.dress[0];
         const token = localStorage.getItem('authToken');
         const isBlocked = localStorage.getItem('blocked') === 'true';
+
         return (
             <div className="detailsPage">
                 <DetailsCard />

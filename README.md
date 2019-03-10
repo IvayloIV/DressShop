@@ -1,6 +1,6 @@
 # DressShop
 My React project in on topic dress shop. Users can sell their dress and buy dress for other users, 
-respectively this will lead to increase or descrese its money. 
+respectively this will lead to increase or descrese their money. 
 When users register successful, he/she automatic receive 10lv, because my site is friendly with new users.
 If some of users make something bad, like post hate comments, admins have choise to block him.
 When user is bloked, he/she can`t create comment, like or create dress.

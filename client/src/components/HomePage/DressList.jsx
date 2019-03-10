@@ -6,7 +6,7 @@ function DressList(props) {
     const { dress, url, countPerPage } = props;
     return (
         <div className={'product-list' + (countPerPage === 8 ? ' more' : ' normal')} id="product-list">
-            {dress.map(d => 
+            {dress.length === 0 ? <h3>No available dress.</h3> : dress.map(d => 
                 <DressCard 
                     key={d._id}
                     creator={d.creator}

@@ -19,9 +19,11 @@ export class ProfilePage extends Component {
             boughtDress: true,
             soldDress: false,
             comments: false,
+            username: ''
         };
 
         this.onClickHandler = this.onClickHandler.bind(this);
+        this.loadProfile = this.loadProfile.bind(this);
     }
 
     async onClickHandler(e) {
@@ -32,8 +34,7 @@ export class ProfilePage extends Component {
         })
     }
 
-    componentDidMount() {
-        const username = this.props.match.params.username;
+    loadProfile(username) {
         this.props.getProfile(username)
             .then(json => {
                 if (!json.success) {
@@ -42,8 +43,23 @@ export class ProfilePage extends Component {
                     return;
                 }
 
-                this.setState({ loading: false });
+                this.setState({ loading: false, username });
             })
+    }
+
+    componentDidMount() {
+        const username = this.props.match.params.username;
+        this.loadProfile(username);
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const username = props.match.params.username;
+        if (state.username !== username) {
+            props.getProfile(username);
+            return { username }
+        } else {
+            return null;
+        }
     }
 
     render() {
@@ -54,7 +70,7 @@ export class ProfilePage extends Component {
 
         return (
             <div className="profilePage">
-                <h3>My profile</h3>
+                <h3>{username} profile</h3>
                 <hr />
                 <ProfileInfo
                     imageUrl={imageUrl}
@@ -87,8 +103,8 @@ export class ProfilePage extends Component {
                     }
                 </div>
                 <div className={this.state.comments ? 'visible' : 'invisible'}>
-                    {comments.length === 0 ? <p className="comments-container missingResults">0 comments.</p> : 
-                    <Comments comments={comments} />}
+                    {comments.length === 0 ? <p className="comments-container missingResults">0 comments.</p> :
+                        <Comments comments={comments} />}
                 </div>
             </div>
         )
